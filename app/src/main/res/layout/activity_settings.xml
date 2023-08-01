@@ -55,6 +55,8 @@
              />
 
             <ImageView
+                android:id="@+id/share"
+
                 android:src="@drawable/pm_light_mode"
 
                 style="@style/ListElementImageViewStyle"
@@ -72,6 +74,8 @@
              />
 
         <ImageView
+            android:id="@+id/support"
+
             android:src="@drawable/pm_support"
 
             style="@style/ListElementImageViewStyle"
@@ -89,6 +93,8 @@
             />
 
             <ImageView
+                android:id="@+id/eula"
+
                 android:src="@drawable/pm_arrow_forward"
 
                 style="@style/ListElementImageViewStyle"
