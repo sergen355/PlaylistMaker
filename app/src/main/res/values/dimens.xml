@@ -11,5 +11,8 @@
     <dimen name="button_margin_bottom">16dp</dimen>
     <dimen name="button_corner_radius">16dp</dimen>
     <dimen name="icon_padding">8dp</dimen>
-    <dimen name="settings_icon_size">24dp</dimen>
+    <dimen name="settings_icon_horizontal">50dp</dimen>
+    <dimen name="settings_icon_vertical">24dp</dimen>
+    <dimen name="switch_scale">0.9</dimen>
+    <dimen name="layout_back_arrow">48dp</dimen>
 </resources>
