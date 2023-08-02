@@ -95,7 +95,6 @@
         <item name="android:hint">@string/search</item>
         <item name="android:drawableStart">@drawable/pm_search</item>
         <item name="android:drawablePadding">@dimen/icon_padding</item>
-        <item name="android:tint">@color/yp_text_gray</item>
     </style>
 
     <style name="CloseButtonImageViewStyle" parent="ListElementImageViewStyle">
