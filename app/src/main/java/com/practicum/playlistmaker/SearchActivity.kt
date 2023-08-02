@@ -1,6 +1,5 @@
 package com.practicum.playlistmaker
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,23 +9,30 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 
 class SearchActivity : AppCompatActivity() {
+
+    var stringValue = ""
+    lateinit var inputEditText: EditText
+    lateinit var back: ImageView
+    lateinit var clearButton: ImageView
+
+    companion object {
+        const val SEARCH_STRING = "SEARCH_STRING"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val back = findViewById<ImageView>(R.id.back)
+        inputEditText = findViewById<EditText>(R.id.edit_text)
+        back = findViewById<ImageView>(R.id.back)
+        clearButton = findViewById<ImageView>(R.id.clearIcon)
+
         back.setOnClickListener {
             val displayIntent = Intent(this, MainActivity::class.java)
             startActivity(displayIntent)
         }
-
-        val inputEditText = findViewById<EditText>(R.id.edit_text)
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
-
-        inputEditText.requestFocus()
 
         clearButton.setOnClickListener {
             inputEditText.setText("")
@@ -38,6 +44,8 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
+        inputEditText.requestFocus()
+
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // empty
@@ -48,7 +56,7 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // empty
+                stringValue = inputEditText.text.toString()
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
@@ -62,13 +70,15 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-  /*  companion object {
-        const val SEARCH_STRING = "SEARCH_STRING"
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(SEARCH_STRING, inputEditText)
-    }*/
+        outState.putString(SEARCH_STRING, stringValue)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        stringValue = savedInstanceState.getString(SEARCH_STRING,"")
+        inputEditText.setText(stringValue)
+    }
 
 }
