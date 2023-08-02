@@ -1,11 +1,13 @@
 package com.practicum.playlistmaker
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -14,7 +16,6 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
 
         val back = findViewById<ImageView>(R.id.back)
         back.setOnClickListener {
@@ -29,6 +30,12 @@ class SearchActivity : AppCompatActivity() {
 
         clearButton.setOnClickListener {
             inputEditText.setText("")
+            val view: View? = this.currentFocus
+            if (view != null) {
+                val inputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+            }
         }
 
         val simpleTextWatcher = object : TextWatcher {
@@ -54,5 +61,14 @@ class SearchActivity : AppCompatActivity() {
             View.VISIBLE
         }
     }
+
+  /*  companion object {
+        const val SEARCH_STRING = "SEARCH_STRING"
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SEARCH_STRING, inputEditText)
+    }*/
 
 }
