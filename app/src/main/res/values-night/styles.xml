@@ -82,14 +82,18 @@
         <item name="android:tint">@color/yp_white</item>
     </style>
 
+    <style name="SearchLineBoxStyle">
+        <item name="android:background">@drawable/edittext_background_night</item>
+    </style>
+
     <style name="SearchLineStyle">
+        <item name="android:background">@null</item>
         <item name="android:inputType">text</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColorHint">@color/yp_black</item>
         <item name="android:textColor">@color/yp_black</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/edittext_background_night</item>
         <item name="android:padding">10dp</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textSize">@dimen/list_text_size</item>

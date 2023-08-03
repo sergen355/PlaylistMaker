@@ -14,8 +14,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val back = findViewById<ImageView>(R.id.back)
         back.setOnClickListener {
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            this.finish()
         }
 
         val share = findViewById<ImageView>(R.id.share)
