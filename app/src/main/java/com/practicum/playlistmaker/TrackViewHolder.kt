@@ -22,7 +22,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         Glide.with(itemView)
             .load(model.artworkUrl100)
-            .placeholder(R.drawable.pm_arrow_forward)
+            .placeholder(R.drawable.pm_placeholder)
             .centerInside()
             .transform(RoundedCorners(10))
             .into(trackImage)

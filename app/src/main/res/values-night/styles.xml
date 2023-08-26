@@ -109,4 +109,13 @@
         <item name="android:tint">@color/yp_black</item>
     </style>
 
+    <style name="TrackName">
+        <item name="android:textColor">@color/yp_white</item>
+    </style>
+
+    <style name="TrackMeta">
+        <item name="android:textColor">@color/yp_white</item>
+        <item name="android:tint">@color/yp_white</item>
+    </style>
+
 </resources>

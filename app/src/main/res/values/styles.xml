@@ -108,16 +108,13 @@
         <item name="android:tint">@color/yp_text_gray</item>
     </style>
 
-    <style name="searchResultMain">
+    <style name="TrackName">
         <item name="android:textColor">@color/yp_black</item>
     </style>
 
-    <style name="searchResultOther">
-        <item name="android:textColor">@color/yp_gray</item>
-    </style>
-
-    <style name="searchArrow">
-        <item name="android:tint">@color/yp_gray</item>
+    <style name="TrackMeta">
+        <item name="android:textColor">@color/yp_text_gray</item>
+        <item name="android:tint">@color/yp_text_gray</item>
     </style>
 
 </resources>
