@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal"
+    android:layout_margin="12dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/trackImage"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/pm_list_arrow"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:layout_weight="0"
+        />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_margin="12dp"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/trackName"
+            style="@style/searchResultMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/artistName"
+                style="@style/searchResultOther"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="11sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                />
+
+            <ImageView
+                style="@style/searchArrow"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/pm_list_arrow"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/trackDur"
+                style="@style/searchResultOther"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="11sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ImageView
+        style="@style/searchArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pm_list_arrow"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        />
+</LinearLayout>

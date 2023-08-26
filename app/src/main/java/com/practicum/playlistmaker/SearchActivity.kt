@@ -10,6 +10,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 
 class SearchActivity : AppCompatActivity() {
 
@@ -17,6 +19,7 @@ class SearchActivity : AppCompatActivity() {
     lateinit var inputEditText: EditText
     lateinit var back: ImageView
     lateinit var clearButton: ImageView
+    val trackList: MutableList<Track> = ArrayList()
 
     companion object {
         const val SEARCH_STRING = "SEARCH_STRING"
@@ -25,6 +28,12 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        val trackAdapter = TrackAdapter(trackList)
+        recyclerView.adapter = trackAdapter
+
+        fillTrackList()
 
         inputEditText = findViewById<EditText>(R.id.edit_text)
         back = findViewById<ImageView>(R.id.back)
@@ -81,4 +90,24 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setText(stringValue)
     }
 
+    private fun fillTrackList() {
+        for(i in 1..5) {
+
+            var trackNameID = getResources().getIdentifier("mock_track_name_" + i, "string", getPackageName());
+            var trackDurID = getResources().getIdentifier("mock_track_dur_" + i, "string", getPackageName());
+            var trackAuthorID = getResources().getIdentifier("mock_track_author_" + i, "string", getPackageName());
+            var trackURLID = getResources().getIdentifier("mock_track_url_" + i, "string", getPackageName());
+
+            var track = Track(
+                getString(trackNameID),
+                getString(trackDurID),
+                getString(trackAuthorID),
+                getString(trackURLID)
+            )
+
+            trackList.add(track)
+        }
+
+
+    }
 }
