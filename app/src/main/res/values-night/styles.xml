@@ -109,4 +109,22 @@
         <item name="android:tint">@color/yp_black</item>
     </style>
 
+    <style name="TrackMetaColor">
+        <item name="android:textColor">@color/yp_white</item>
+        <item name="android:tint">@color/yp_white</item>
+    </style>
+
+    <style name="TrackMeta" parent="TrackMetaColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">""</item>
+        <item name="android:textSize">@dimen/track_meta_text_size</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="TrackName" parent="TrackMeta">
+        <item name="android:textSize">@dimen/track_name_text_size</item>
+    </style>
+
 </resources>
