@@ -1,6 +1,5 @@
 package com.practicum.playlistmaker
 
-import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,6 +15,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val trackImage: ImageView = itemView.findViewById(R.id.track_image)
 
     fun bind(model: Track) {
+
         trackName.text = model.trackName
         artistName.text = model.artistName
         trackDur.text = model.trackTime
@@ -24,7 +24,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .load(model.artworkUrl100)
             .placeholder(R.drawable.pm_placeholder)
             .centerInside()
-            .transform(RoundedCorners(10))
+            .transform(RoundedCorners(itemView.context.resources.getDimensionPixelSize(R.dimen.image_corner_radius)))
             .into(trackImage)
     }
 
