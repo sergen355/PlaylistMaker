@@ -16,13 +16,6 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val trackDur: TextView = itemView.findViewById(R.id.track_dur)
     private val trackImage: ImageView = itemView.findViewById(R.id.track_image)
 
-    private fun dpToPx(dp: Float, context: Context): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp,
-            context.resources.displayMetrics).toInt()
-    }
-
     fun bind(model: Track) {
 
         trackName.text = model.trackName
@@ -33,7 +26,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .load(model.artworkUrl100)
             .placeholder(R.drawable.pm_placeholder)
             .centerInside()
-            .transform(RoundedCorners(dpToPx(2F, itemView.context)))
+            .transform(RoundedCorners(itemView.context.resources.getDimensionPixelSize(R.dimen.image_corner_radius)))
             .into(trackImage)
     }
 
