@@ -19,4 +19,5 @@
     <dimen name="track_name_text_size">16dp</dimen>
     <dimen name="track_meta_text_size">11dp</dimen>
     <dimen name="text_dot_size">12dp</dimen>
+    <dimen name="image_corner_radius">2dp</dimen>
 </resources>
