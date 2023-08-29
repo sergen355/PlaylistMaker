@@ -9,6 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Retrofit
+import retrofit2.create
 
 class SearchActivity : AppCompatActivity() {
 
@@ -106,4 +108,11 @@ class SearchActivity : AppCompatActivity() {
 
 
     }
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://itunes.apple.com")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val iTunesApi = retrofit.create<iTunesApi>()
 }
