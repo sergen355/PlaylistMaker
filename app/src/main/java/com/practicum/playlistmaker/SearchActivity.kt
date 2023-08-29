@@ -81,13 +81,13 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-                iTunesApi.search("song", inputEditText.toString()).enqueue(object : Callback<TrackResponse> {
+                iTunesApi.search("song", inputEditText.text.toString()).enqueue(object : Callback<TrackResponse> {
                     override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
                         if (response.code() == 200) {
                             trackList.clear()
+                            Log.d("Debugging response", response.toString())
                             if (response.body()?.results?.isNotEmpty() == true) {
                                 trackList.addAll(response.body()?.results!!)
-                                Log.d("TAG", "message")
                                 trackAdapter.notifyDataSetChanged()
                             }
                             if (trackList.isEmpty()) {
