@@ -31,4 +31,7 @@
     <string name="student_email">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="student_email_title">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="practicum_offer">https://yandex.ru/legal/practicum_offer/</string>
+
+    <string name="nothing_found">test1</string>
+    <string name="something_went_wrong">test2</string>
 </resources>
