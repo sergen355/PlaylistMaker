@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 class SearchActivity : AppCompatActivity() {
@@ -66,7 +71,36 @@ class SearchActivity : AppCompatActivity() {
                 stringValue = inputEditText.text.toString()
             }
         }
+
+        inputEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+
+                iTunesApi.search("song", inputEditText.toString()).enqueue(object : Callback<Track> {
+                    override fun onResponse(call: Call<Track>, response: Response<Track>) {
+                        // Получили ответ от сервера
+                        if (response.isSuccessful) {
+                            // Наш запрос был удачным, получаем наши объекты
+                            val hamsters = response.body().orEmpty()
+                        } else {
+                            // Сервер отклонил наш запрос с ошибкой
+                            val errorJson = response.errorBody()?.string()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Track>, t: Throwable) {
+                        // Не смогли присоединиться к серверу
+                        // Выводим ошибку в лог, что-то пошло не так
+                        t.printStackTrace()
+                    }
+                })
+
+                true
+            }
+            false
+        }
+
         inputEditText.addTextChangedListener(simpleTextWatcher)
+
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
