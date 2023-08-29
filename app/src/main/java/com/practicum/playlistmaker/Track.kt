@@ -5,4 +5,4 @@ data class Track (
     var artistName: String, // Имя исполнителя
     var trackTime: String, // Продолжительность трека
     var artworkUrl100: String // Ссылка на изображение обложки
-) {}
+)
