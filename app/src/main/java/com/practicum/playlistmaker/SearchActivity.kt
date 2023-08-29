@@ -59,6 +59,8 @@ class SearchActivity : AppCompatActivity() {
                 val inputMethodManager =
                     getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+                trackList.clear()
+                trackAdapter.notifyDataSetChanged()
             }
         }
 
