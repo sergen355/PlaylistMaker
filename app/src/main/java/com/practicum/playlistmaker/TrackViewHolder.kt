@@ -18,7 +18,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         trackName.text = model.trackName
         artistName.text = model.artistName
-        trackDur.text = model.trackTime
+        trackDur.text = model.trackTimeMillis
 
         Glide.with(itemView)
             .load(model.artworkUrl100)

@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +25,9 @@ class SearchActivity : AppCompatActivity() {
     lateinit var back: ImageView
     lateinit var clearButton: ImageView
     val trackList: MutableList<Track> = ArrayList()
+    val trackAdapter = TrackAdapter(trackList)
+    private lateinit var placeholderMessage: TextView
+
 
     companion object {
         const val SEARCH_STRING = "SEARCH_STRING"
@@ -32,10 +36,10 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        placeholderMessage = findViewById(R.id.placeholder_message)
 
-        fillTrackList()
+        //fillTrackList()
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        val trackAdapter = TrackAdapter(trackList)
         recyclerView.adapter = trackAdapter
 
         inputEditText = findViewById<EditText>(R.id.edit_text)
@@ -75,19 +79,25 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-                iTunesApi.search("song", inputEditText.toString()).enqueue(object : Callback<Track> {
-                    override fun onResponse(call: Call<Track>, response: Response<Track>) {
-                        // Получили ответ от сервера
-                        if (response.isSuccessful) {
-                            // Наш запрос был удачным, получаем наши объекты
-                            val hamsters = response.body().orEmpty()
+                iTunesApi.search("song", inputEditText.toString()).enqueue(object : Callback<TrackResponse> {
+                    override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
+                        if (response.code() == 200) {
+                            trackList.clear()
+                            if (response.body()?.results?.isNotEmpty() == true) {
+                                trackList.addAll(response.body()?.results!!)
+                                trackAdapter.notifyDataSetChanged()
+                            }
+                            if (trackList.isEmpty()) {
+                                showMessage(getString(R.string.nothing_found), "")
+                            } else {
+                                showMessage("", "")
+                            }
                         } else {
-                            // Сервер отклонил наш запрос с ошибкой
-                            val errorJson = response.errorBody()?.string()
+                            showMessage(getString(R.string.something_went_wrong), response.code().toString())
                         }
                     }
 
-                    override fun onFailure(call: Call<Track>, t: Throwable) {
+                    override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
                         // Не смогли присоединиться к серверу
                         // Выводим ошибку в лог, что-то пошло не так
                         t.printStackTrace()
@@ -101,6 +111,21 @@ class SearchActivity : AppCompatActivity() {
 
         inputEditText.addTextChangedListener(simpleTextWatcher)
 
+    }
+
+    private fun showMessage(text: String, additionalMessage: String) {
+        if (text.isNotEmpty()) {
+            placeholderMessage.visibility = View.VISIBLE
+            trackList.clear()
+            trackAdapter.notifyDataSetChanged()
+            placeholderMessage.text = text
+            if (additionalMessage.isNotEmpty()) {
+                Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
+                    .show()
+            }
+        } else {
+            placeholderMessage.visibility = View.GONE
+        }
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
@@ -122,7 +147,7 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setText(stringValue)
     }
 
-    private fun fillTrackList() {
+    /*private fun fillTrackList() {
         for(i in 1..5) {
 
             val trackNameID = resources.getIdentifier("mock_track_name_" + i, "string", getPackageName());
@@ -141,7 +166,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
 
-    }
+    }*/
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://itunes.apple.com")
@@ -150,3 +175,4 @@ class SearchActivity : AppCompatActivity() {
 
     val iTunesApi = retrofit.create<iTunesApi>()
 }
+

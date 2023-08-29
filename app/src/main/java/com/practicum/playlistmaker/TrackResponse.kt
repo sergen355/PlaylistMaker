@@ -1,7 +1,6 @@
 package com.practicum.playlistmaker;
 
-class TrackResponse (var trackName: String,
-    val artistName: String,
-    val trackTimeMillis: String,
-    var artworkUrl100: String
+class TrackResponse (val searchType: String,
+                     val expression: String,
+                     val results: List<Track>
 )
