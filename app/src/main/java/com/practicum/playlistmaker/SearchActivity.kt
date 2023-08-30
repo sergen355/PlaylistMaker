@@ -104,6 +104,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun trackSearch() {
+        placeholderMessage.visibility = View.GONE
+        placeholderImage.visibility = View.GONE
+        placeholderUpdateButton.visibility = View.GONE
         iTunesApi.search("song", inputEditText.text.toString())
             .enqueue(object : Callback<TrackResponse> {
                 override fun onResponse(
@@ -181,9 +184,6 @@ class SearchActivity : AppCompatActivity() {
         placeholderUpdateButton.visibility = View.VISIBLE
         placeholderUpdateButton.setOnClickListener {
             trackSearch()
-            placeholderMessage.visibility = View.GONE
-            placeholderImage.visibility = View.GONE
-            placeholderUpdateButton.visibility = View.GONE
         }
     }
 
