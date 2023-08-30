@@ -94,50 +94,67 @@ class SearchActivity : AppCompatActivity() {
 
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-
-                iTunesApi.search("song", inputEditText.text.toString()).enqueue(object : Callback<TrackResponse> {
-                    override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
-                        if (response.code() == 200) {
-                            trackList.clear()
-                            Log.d("To check response", response.toString())
-                            Log.d("Response code", response.code().toString())
-                            if (response.body()?.results?.isNotEmpty() == true) {
-                                trackList.addAll(response.body()?.results!!)
-                                trackAdapter.notifyDataSetChanged()
-                            }
-                            if (trackList.isEmpty()) {
-                                showMessage(getString(R.string.nothing_found), "")
-                                if (isDarkTheme()) {
-                                showImage(R.drawable.placeholder_songs_nothing_found_dark)
-                                }
-                                else {
-                                    showImage(R.drawable.placeholder_songs_nothing_found_light)
-                                }
-                            } else {
-                                showMessage("", "")
-                            }
-                        } else {
-                            showMessage(getString(R.string.something_went_wrong), response.code().toString())
-                            if (isDarkTheme()) {
-                                showImage(R.drawable.placeholder_songs_no_connection_dark)
-                            }
-                            else {
-                                showImage(R.drawable.placeholder_songs_no_connection_light)
-                            }
-                            showUpdateButton()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-                        t.printStackTrace()
-                    }
-                })
+                trackSearch()
             }
             false
         }
 
         inputEditText.addTextChangedListener(simpleTextWatcher)
 
+    }
+
+    private fun trackSearch() {
+        iTunesApi.search("song", inputEditText.text.toString())
+            .enqueue(object : Callback<TrackResponse> {
+                override fun onResponse(
+                    call: Call<TrackResponse>,
+                    response: Response<TrackResponse>
+                ) {
+                    if (response.code() == 200) {
+                        trackList.clear()
+                        Log.d("To check response", response.toString())
+                        Log.d("Response code", response.code().toString())
+                        if (response.body()?.results?.isNotEmpty() == true) {
+                            trackList.addAll(response.body()?.results!!)
+                            trackAdapter.notifyDataSetChanged()
+                        }
+                        if (trackList.isEmpty()) {
+                            showMessage(getString(R.string.nothing_found), "")
+                            if (isDarkTheme()) {
+                                showImage(R.drawable.placeholder_songs_nothing_found_dark)
+                            } else {
+                                showImage(R.drawable.placeholder_songs_nothing_found_light)
+                            }
+                        } else {
+                            showMessage("", "")
+                        }
+                    } else {
+                        showMessage(
+                            getString(R.string.something_went_wrong),
+                            response.code().toString()
+                        )
+                        if (isDarkTheme()) {
+                            showImage(R.drawable.placeholder_songs_no_connection_dark)
+                        } else {
+                            showImage(R.drawable.placeholder_songs_no_connection_light)
+                        }
+                        showUpdateButton()
+                    }
+                }
+
+                override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
+                    showMessage(
+                        getString(R.string.something_went_wrong),
+                        t.toString()
+                    )
+                    if (isDarkTheme()) {
+                        showImage(R.drawable.placeholder_songs_no_connection_dark)
+                    } else {
+                        showImage(R.drawable.placeholder_songs_no_connection_light)
+                    }
+                    showUpdateButton()
+                }
+            })
     }
 
     private fun showMessage(text: String, additionalMessage: String) {
@@ -163,7 +180,7 @@ class SearchActivity : AppCompatActivity() {
     private fun showUpdateButton() {
         placeholderUpdateButton.visibility = View.VISIBLE
         placeholderUpdateButton.setOnClickListener {
-            iTunesApi.search("song", inputEditText.text.toString())
+            trackSearch()
             placeholderMessage.visibility = View.GONE
             placeholderImage.visibility = View.GONE
             placeholderUpdateButton.visibility = View.GONE
