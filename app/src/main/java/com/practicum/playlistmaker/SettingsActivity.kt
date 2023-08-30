@@ -21,7 +21,7 @@ class SettingsActivity : AppCompatActivity() {
         share.setOnClickListener {
             val message = getString(R.string.practicum_android_link)
             val shareIntent  = Intent(Intent.ACTION_SEND)
-            shareIntent.setType("text/plain")
+            shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_TEXT, message)
             startActivity(shareIntent)
         }

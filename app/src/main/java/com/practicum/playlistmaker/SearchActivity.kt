@@ -24,12 +24,18 @@ class SearchActivity : AppCompatActivity() {
 
     var stringValue = ""
     lateinit var inputEditText: EditText
-    lateinit var back: ImageView
     lateinit var clearButton: ImageView
-    val trackList: MutableList<Track> = ArrayList()
-    val trackAdapter = TrackAdapter(trackList)
+    private lateinit var back: ImageView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var placeholderMessage: TextView
 
+    val trackList: MutableList<Track> = ArrayList()
+    val trackAdapter = TrackAdapter(trackList)
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://itunes.apple.com")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    private val iTunesApi = retrofit.create<iTunesApi>()
 
     companion object {
         const val SEARCH_STRING = "SEARCH_STRING"
@@ -38,15 +44,16 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        placeholderMessage = findViewById(R.id.placeholder_message)
 
-        //fillTrackList()
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView = findViewById(R.id.recycler_view)
+        placeholderMessage = findViewById(R.id.placeholder_message)
+        inputEditText = findViewById(R.id.edit_text)
+        clearButton = findViewById(R.id.clear_icon)
+        back = findViewById(R.id.back)
+
         recyclerView.adapter = trackAdapter
 
-        inputEditText = findViewById<EditText>(R.id.edit_text)
-        back = findViewById<ImageView>(R.id.back)
-        clearButton = findViewById<ImageView>(R.id.clear_icon)
+        inputEditText.requestFocus()
 
         back.setOnClickListener {
             this.finish()
@@ -58,13 +65,11 @@ class SearchActivity : AppCompatActivity() {
             if (view != null) {
                 val inputMethodManager =
                     getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+                inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
                 trackList.clear()
                 trackAdapter.notifyDataSetChanged()
             }
         }
-
-        inputEditText.requestFocus()
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -87,7 +92,7 @@ class SearchActivity : AppCompatActivity() {
                     override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
                         if (response.code() == 200) {
                             trackList.clear()
-                            Log.d("Debugging response", response.toString())
+                            Log.d("To check response", response.toString())
                             if (response.body()?.results?.isNotEmpty() == true) {
                                 trackList.addAll(response.body()?.results!!)
                                 trackAdapter.notifyDataSetChanged()
@@ -103,13 +108,9 @@ class SearchActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-                        // Не смогли присоединиться к серверу
-                        // Выводим ошибку в лог, что-то пошло не так
                         t.printStackTrace()
                     }
                 })
-
-                true
             }
             false
         }
@@ -151,33 +152,5 @@ class SearchActivity : AppCompatActivity() {
         stringValue = savedInstanceState.getString(SEARCH_STRING,"")
         inputEditText.setText(stringValue)
     }
-
-    /*private fun fillTrackList() {
-        for(i in 1..5) {
-
-            val trackNameID = resources.getIdentifier("mock_track_name_" + i, "string", getPackageName());
-            val trackArtistID = resources.getIdentifier("mock_track_artist_" + i, "string", getPackageName());
-            val trackDurID = resources.getIdentifier("mock_track_dur_" + i, "string", getPackageName());
-            val trackURLID = resources.getIdentifier("mock_track_url_" + i, "string", getPackageName());
-
-            val track = Track(
-                getString(trackNameID),
-                getString(trackArtistID),
-                getString(trackDurID),
-                getString(trackURLID)
-            )
-
-            trackList.add(track)
-        }
-
-
-    }*/
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://itunes.apple.com")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    val iTunesApi = retrofit.create<iTunesApi>()
 }
 
