@@ -1,5 +1,11 @@
 package com.practicum.playlistmaker
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.res.Configuration
+import android.graphics.drawable.Drawable
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -28,6 +35,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var back: ImageView
     private lateinit var recyclerView: RecyclerView
     private lateinit var placeholderMessage: TextView
+    private lateinit var placeholderImage: ImageView
+    private lateinit var placeholderUpdateButton: Button
 
     val trackList: MutableList<Track> = ArrayList()
     val trackAdapter = TrackAdapter(trackList)
@@ -47,6 +56,8 @@ class SearchActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recycler_view)
         placeholderMessage = findViewById(R.id.placeholder_message)
+        placeholderImage = findViewById(R.id.placeholder_image)
+        placeholderUpdateButton = findViewById(R.id.placeholder_button)
         inputEditText = findViewById(R.id.edit_text)
         clearButton = findViewById(R.id.clear_icon)
         back = findViewById(R.id.back)
@@ -93,17 +104,32 @@ class SearchActivity : AppCompatActivity() {
                         if (response.code() == 200) {
                             trackList.clear()
                             Log.d("To check response", response.toString())
+                            Log.d("Response code", response.code().toString())
                             if (response.body()?.results?.isNotEmpty() == true) {
                                 trackList.addAll(response.body()?.results!!)
                                 trackAdapter.notifyDataSetChanged()
                             }
                             if (trackList.isEmpty()) {
                                 showMessage(getString(R.string.nothing_found), "")
+                                if (isDarkTheme()) {
+                                showImage(R.drawable.placeholder_songs_nothing_found_dark)
+                                }
+                                else {
+                                    showImage(R.drawable.placeholder_songs_nothing_found_light)
+                                }
+                                showButton()
                             } else {
                                 showMessage("", "")
                             }
                         } else {
                             showMessage(getString(R.string.something_went_wrong), response.code().toString())
+                            if (isDarkTheme()) {
+                                showImage(R.drawable.placeholder_songs_no_connection_dark)
+                            }
+                            else {
+                                showImage(R.drawable.placeholder_songs_no_connection_light)
+                            }
+                            showButton()
                         }
                     }
 
@@ -134,6 +160,16 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    private fun showImage(image: Int) {
+        placeholderImage.setImageResource(image)
+        placeholderImage.visibility = View.VISIBLE
+    }
+
+    private fun showButton() {
+        placeholderUpdateButton.visibility = View.VISIBLE
+        placeholderUpdateButton.setOnClickListener { iTunesApi.search("song", inputEditText.text.toString()) }
+    }
+
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -152,5 +188,8 @@ class SearchActivity : AppCompatActivity() {
         stringValue = savedInstanceState.getString(SEARCH_STRING,"")
         inputEditText.setText(stringValue)
     }
+
+    fun Context.isDarkTheme(): Boolean {
+        return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES }
 }
 

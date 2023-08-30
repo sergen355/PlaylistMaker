@@ -16,15 +16,6 @@
             />
 
         <TextView
-            android:id="@+id/placeholder_message"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="55dp"
-
-            style="@style/HeaderStyle"
-            />
-
-        <TextView
             android:text="@string/search"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
@@ -61,6 +52,34 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/padding"
         />
+
+        <ImageView
+            android:id="@+id/placeholder_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/placeholder_songs_nothing_found_light"
+            android:visibility="gone"
+
+            />
+
+        <TextView
+            android:id="@+id/placeholder_message"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+
+            style="@style/PlaceholderStyle"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/placeholder_button"
+            android:text="Обновить"
+            android:visibility="gone"
+            app:icon="@drawable/pm_search"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

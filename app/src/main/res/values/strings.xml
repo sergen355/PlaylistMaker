@@ -32,6 +32,6 @@
     <string name="student_email_title">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="practicum_offer">https://yandex.ru/legal/practicum_offer/</string>
 
-    <string name="nothing_found">nothing_found</string>
-    <string name="something_went_wrong">something_went_wrong</string>
+    <string name="nothing_found">Ничего не нашлось</string>
+    <string name="something_went_wrong">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
 </resources>
