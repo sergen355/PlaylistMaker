@@ -113,7 +113,6 @@ class SearchActivity : AppCompatActivity() {
                                 else {
                                     showImage(R.drawable.placeholder_songs_nothing_found_light)
                                 }
-                                showUpdateButton()
                             } else {
                                 showMessage("", "")
                             }
@@ -163,7 +162,12 @@ class SearchActivity : AppCompatActivity() {
 
     private fun showUpdateButton() {
         placeholderUpdateButton.visibility = View.VISIBLE
-        placeholderUpdateButton.setOnClickListener { iTunesApi.search("song", inputEditText.text.toString()) }
+        placeholderUpdateButton.setOnClickListener {
+            iTunesApi.search("song", inputEditText.text.toString())
+            placeholderMessage.visibility = View.GONE
+            placeholderImage.visibility = View.GONE
+            placeholderUpdateButton.visibility = View.GONE
+        }
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
