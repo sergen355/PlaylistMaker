@@ -67,18 +67,16 @@
             android:id="@+id/placeholder_message"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
 
             style="@style/PlaceholderStyle"
             />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:id="@+id/placeholder_button"
-            android:text="Обновить"
             android:visibility="gone"
-            app:icon="@drawable/pm_search"
+
+            style="@style/UpdateButton"
             />
 
         <androidx.recyclerview.widget.RecyclerView

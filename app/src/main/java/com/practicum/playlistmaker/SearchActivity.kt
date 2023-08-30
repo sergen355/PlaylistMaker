@@ -1,11 +1,7 @@
 package com.practicum.playlistmaker
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.drawable.Drawable
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -117,7 +113,7 @@ class SearchActivity : AppCompatActivity() {
                                 else {
                                     showImage(R.drawable.placeholder_songs_nothing_found_light)
                                 }
-                                showButton()
+                                showUpdateButton()
                             } else {
                                 showMessage("", "")
                             }
@@ -129,7 +125,7 @@ class SearchActivity : AppCompatActivity() {
                             else {
                                 showImage(R.drawable.placeholder_songs_no_connection_light)
                             }
-                            showButton()
+                            showUpdateButton()
                         }
                     }
 
@@ -165,7 +161,7 @@ class SearchActivity : AppCompatActivity() {
         placeholderImage.visibility = View.VISIBLE
     }
 
-    private fun showButton() {
+    private fun showUpdateButton() {
         placeholderUpdateButton.visibility = View.VISIBLE
         placeholderUpdateButton.setOnClickListener { iTunesApi.search("song", inputEditText.text.toString()) }
     }

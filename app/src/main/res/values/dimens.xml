@@ -20,4 +20,6 @@
     <dimen name="track_meta_text_size">11dp</dimen>
     <dimen name="text_dot_size">12dp</dimen>
     <dimen name="image_corner_radius">2dp</dimen>
+    <dimen name="update_button_corner_radius">54dp</dimen>
+    <dimen name="placeholder_text_size">19dp</dimen>
 </resources>
