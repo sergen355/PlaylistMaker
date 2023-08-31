@@ -20,7 +20,7 @@ class SettingsActivity : AppCompatActivity() {
         val share = findViewById<ImageView>(R.id.share)
         share.setOnClickListener {
             val message = getString(R.string.practicum_android_link)
-            val shareIntent  = Intent(Intent.ACTION_SEND)
+            val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_TEXT, message)
             startActivity(shareIntent)
@@ -31,7 +31,7 @@ class SettingsActivity : AppCompatActivity() {
             val email = getString(R.string.student_email_address)
             val title = getString(R.string.student_email_title)
             val message = getString(R.string.student_email)
-            val supportIntent  = Intent(Intent.ACTION_SENDTO)
+            val supportIntent = Intent(Intent.ACTION_SENDTO)
             supportIntent.data = Uri.parse("mailto:")
             supportIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
             supportIntent.putExtra(Intent.EXTRA_SUBJECT, title)
@@ -41,8 +41,10 @@ class SettingsActivity : AppCompatActivity() {
 
         val eula = findViewById<ImageView>(R.id.eula)
         eula.setOnClickListener {
-            val eulaIntent  = Intent(Intent.ACTION_VIEW,
-                Uri.parse(getString(R.string.practicum_offer)))
+            val eulaIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(getString(R.string.practicum_offer))
+            )
             startActivity(eulaIntent)
         }
 

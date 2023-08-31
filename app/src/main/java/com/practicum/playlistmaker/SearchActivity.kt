@@ -25,9 +25,9 @@ import retrofit2.create
 
 class SearchActivity : AppCompatActivity() {
 
-    var stringValue = ""
-    lateinit var inputEditText: EditText
-    lateinit var clearButton: ImageView
+    private var stringValue = ""
+    private lateinit var inputEditText: EditText
+    private lateinit var clearButton: ImageView
     private lateinit var back: ImageView
     private lateinit var recyclerView: RecyclerView
     private lateinit var placeholderMessage: TextView
@@ -40,7 +40,7 @@ class SearchActivity : AppCompatActivity() {
         .baseUrl("https://itunes.apple.com")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    private val iTunesApi = retrofit.create<iTunesApi>()
+    private val iTunesApi = retrofit.create<ITunesApi>()
 
     companion object {
         const val SEARCH_STRING = "SEARCH_STRING"
@@ -75,6 +75,7 @@ class SearchActivity : AppCompatActivity() {
                 inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
                 trackList.clear()
                 trackAdapter.notifyDataSetChanged()
+                hidePlaceholders()
             }
         }
 
@@ -104,9 +105,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun trackSearch() {
-        placeholderMessage.visibility = View.GONE
-        placeholderImage.visibility = View.GONE
-        placeholderUpdateButton.visibility = View.GONE
+        hidePlaceholders()
         iTunesApi.search("song", inputEditText.text.toString())
             .enqueue(object : Callback<TrackResponse> {
                 override fun onResponse(
@@ -162,16 +161,14 @@ class SearchActivity : AppCompatActivity() {
 
     private fun showMessage(text: String, additionalMessage: String) {
         if (text.isNotEmpty()) {
-            placeholderMessage.visibility = View.VISIBLE
             trackList.clear()
             trackAdapter.notifyDataSetChanged()
             placeholderMessage.text = text
+            placeholderMessage.visibility = View.VISIBLE
             if (additionalMessage.isNotEmpty()) {
                 Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
                     .show()
             }
-        } else {
-            placeholderMessage.visibility = View.GONE
         }
     }
 
@@ -195,6 +192,12 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    private fun hidePlaceholders() {
+        placeholderMessage.visibility = View.GONE
+        placeholderImage.visibility = View.GONE
+        placeholderUpdateButton.visibility = View.GONE
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SEARCH_STRING, stringValue)
@@ -202,11 +205,12 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        stringValue = savedInstanceState.getString(SEARCH_STRING,"")
+        stringValue = savedInstanceState.getString(SEARCH_STRING, "")
         inputEditText.setText(stringValue)
     }
 
     fun Context.isDarkTheme(): Boolean {
-        return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES }
+        return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    }
 }
 

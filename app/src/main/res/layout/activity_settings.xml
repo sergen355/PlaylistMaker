@@ -1,108 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     style="@style/MainLayoutStyle">
 
-    <FrameLayout
-        style="@style/MainHeaderLayoutStyle"
-        >
+    <FrameLayout style="@style/MainHeaderLayoutStyle">
 
         <ImageView
             android:id="@+id/back"
-
             style="@style/BackButtonStyle"
-            />
+
+            android:contentDescription="@string/back_button" />
 
         <TextView
-            android:text="@string/settings"
+            style="@style/HeaderStyle"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="55dp"
+            android:layout_marginStart="55dp"
 
-            style="@style/HeaderStyle"/>
+            android:text="@string/settings" />
 
     </FrameLayout>
 
-    <LinearLayout
-        style="@style/WindowLayoutStyle">
+    <LinearLayout style="@style/WindowLayoutStyle">
 
-        <FrameLayout
-            style="@style/ListElementStyle">
+        <FrameLayout style="@style/ListElementStyle">
 
-        <TextView
-            android:text="@string/dark_theme"
+            <TextView
+                style="@style/ListElementTextViewStyle"
 
-            style="@style/ListElementTextViewStyle"
-             />
+                android:text="@string/dark_theme" />
 
             <Switch
-                android:scaleX="@dimen/switch_scale"
-                android:scaleY="@dimen/switch_scale"
-
                 style="@style/ListElementImageViewStyle"
-                />
+                android:scaleX="@dimen/switch_scale"
+
+                android:scaleY="@dimen/switch_scale" />
 
         </FrameLayout>
 
-        <FrameLayout
-            style="@style/ListElementStyle">
+        <FrameLayout style="@style/ListElementStyle">
 
-        <TextView
-            android:text="@string/share_app"
+            <TextView
+                style="@style/ListElementTextViewStyle"
 
-            style="@style/ListElementTextViewStyle"
-             />
+                android:text="@string/share_app" />
 
             <ImageView
                 android:id="@+id/share"
-
-                android:src="@drawable/pm_light_mode"
-
                 style="@style/ListElementImageViewStyle"
-                />
+                android:contentDescription="@string/share_button"
+
+                android:src="@drawable/share" />
 
         </FrameLayout>
 
-        <FrameLayout
-            style="@style/ListElementStyle">
+        <FrameLayout style="@style/ListElementStyle">
 
-        <TextView
-            android:text="@string/ask_support"
+            <TextView
+                style="@style/ListElementTextViewStyle"
 
-            style="@style/ListElementTextViewStyle"
-             />
+                android:text="@string/ask_support" />
 
-        <ImageView
-            android:id="@+id/support"
+            <ImageView
+                android:id="@+id/support"
+                style="@style/ListElementImageViewStyle"
+                android:contentDescription="@string/support_button"
 
-            android:src="@drawable/pm_support"
+                android:src="@drawable/support" />
 
-            style="@style/ListElementImageViewStyle"
-            />
+        </FrameLayout>
 
-    </FrameLayout>
+        <FrameLayout style="@style/ListElementStyle">
 
-        <FrameLayout
-            style="@style/ListElementStyle">
+            <TextView
+                style="@style/ListElementTextViewStyle"
 
-        <TextView
-            android:text="@string/eula"
-
-            style="@style/ListElementTextViewStyle"
-            />
+                android:text="@string/eula" />
 
             <ImageView
                 android:id="@+id/eula"
-
-                android:src="@drawable/pm_arrow_forward"
-
                 style="@style/ListElementImageViewStyle"
-                />
+                android:contentDescription="@string/eula_button"
+
+                android:src="@drawable/arrow_forward" />
 
         </FrameLayout>
-
-        />
 
     </LinearLayout>
 </LinearLayout>

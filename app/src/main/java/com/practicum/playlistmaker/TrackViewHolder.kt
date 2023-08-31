@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val trackName: TextView = itemView.findViewById(R.id.track_name)
     private val artistName: TextView = itemView.findViewById(R.id.artist_name)
@@ -24,7 +24,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         Glide.with(itemView)
             .load(model.artworkUrl100)
-            .placeholder(R.drawable.pm_placeholder)
+            .placeholder(R.drawable.album_placeholder)
             .centerInside()
             .transform(RoundedCorners(itemView.context.resources.getDimensionPixelSize(R.dimen.image_corner_radius)))
             .into(trackImage)
