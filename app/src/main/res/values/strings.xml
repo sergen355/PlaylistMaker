@@ -1,16 +1,4 @@
 <resources>
-    <string name="app_name">Playlist Maker</string>
-
-    <string name="search">Поиск</string>
-    <string name="medialibrary">Медиатека</string>
-    <string name="settings">Настройки</string>
-
-    <string name="dark_theme">Тёмная тема</string>
-    <string name="share_app">Поделиться приложением</string>
-    <string name="ask_support">Написать в поддержку</string>
-    <string name="eula">Пользовательское соглашение</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -26,9 +14,36 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
+    <!-- Accessibility -->
+    <string name="back_button">Back button</string>
+    <string name="share_button">Share button</string>
+    <string name="support_button">Support button</string>
+    <string name="clear_button">Clear button</string>
+    <string name="eula_button">EULA button</string>
+    <string name="track_image">Track image</string>
+    <string name="track_dot">Dot in track meta</string>
+    <string name="track_arrow_button">Track arrow button</string>
+    <string name="placeholder_image">Placeholder image</string>
+
+    <string name="app_name">Playlist Maker</string>
+
+    <string name="search">Поиск</string>
+    <string name="medialibrary">Медиатека</string>
+    <string name="settings">Настройки</string>
+
+    <string name="dark_theme">Тёмная тема</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="ask_support">Написать в поддержку</string>
+    <string name="eula">Пользовательское соглашение</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
     <string name="practicum_android_link">https://practicum.yandex.ru/profile/android-developer/</string>
     <string name="student_email_address">seermakov355@yandex.ru</string>
     <string name="student_email">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="student_email_title">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="practicum_offer">https://yandex.ru/legal/practicum_offer/</string>
+
+    <string name="update">Обновить</string>
+    <string name="nothing_found">Ничего не нашлось</string>
+    <string name="something_went_wrong">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
 </resources>
