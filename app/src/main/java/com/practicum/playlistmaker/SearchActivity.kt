@@ -74,10 +74,11 @@ class SearchActivity : AppCompatActivity() {
         back = findViewById(R.id.back)
 
         trackRecyclerView.adapter = trackAdapter
-        historyRecyclerView.layoutManager = LinearLayoutManager(this)
         historyRecyclerView.adapter = historyAdapter
 
         searchHistory.getHistoryList()
+
+        showTrackHistory()
 
         inputEditText.requestFocus()
 
