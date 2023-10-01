@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,16 +25,23 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
+const val PLAYLIST_MAKER_HISTORY = "playlist_maker_history"
+
 class SearchActivity : AppCompatActivity() {
 
     private var stringValue = ""
     private lateinit var inputEditText: EditText
     private lateinit var clearButton: ImageView
     private lateinit var back: ImageView
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var trackRecyclerView: RecyclerView
+    private lateinit var historyRecyclerView: RecyclerView
     private lateinit var placeholderMessage: TextView
     private lateinit var placeholderImage: ImageView
     private lateinit var placeholderUpdateButton: Button
+    private lateinit var placeholderSearch: TextView
+    private lateinit var historyClearButton: Button
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var historyAdapter: TrackAdapter
 
     val trackList: MutableList<Track> = ArrayList()
     val trackAdapter = TrackAdapter(trackList)
@@ -49,16 +58,26 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        var sharedPrefs = getSharedPreferences(PLAYLIST_MAKER_HISTORY, MODE_PRIVATE)
+        searchHistory = SearchHistory(sharedPrefs)
 
-        recyclerView = findViewById(R.id.recycler_view)
+        historyAdapter = TrackAdapter(searchHistory.trackHistoryList)
+        trackRecyclerView = findViewById(R.id.track_recycler_view)
+        historyRecyclerView = findViewById(R.id.history_recycler_view)
         placeholderMessage = findViewById(R.id.placeholder_message)
         placeholderImage = findViewById(R.id.placeholder_image)
         placeholderUpdateButton = findViewById(R.id.placeholder_button)
+        placeholderSearch = findViewById(R.id.placeholder_history_text)
+        historyClearButton = findViewById(R.id.clear_history_button)
         inputEditText = findViewById(R.id.edit_text)
         clearButton = findViewById(R.id.clear_icon)
         back = findViewById(R.id.back)
 
-        recyclerView.adapter = trackAdapter
+        trackRecyclerView.adapter = trackAdapter
+        historyRecyclerView.layoutManager = LinearLayoutManager(this)
+        historyRecyclerView.adapter = historyAdapter
+
+        searchHistory.getHistoryList()
 
         inputEditText.requestFocus()
 
@@ -86,6 +105,11 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
+                if (inputEditText.hasFocus() && s.isNullOrEmpty()) {
+                    showTrackHistory()
+                } else {
+                    hideTrackHistory()
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -101,6 +125,20 @@ class SearchActivity : AppCompatActivity() {
         }
 
         inputEditText.addTextChangedListener(simpleTextWatcher)
+
+        historyClearButton.setOnClickListener {
+            searchHistory.clearHistory()
+            hideTrackHistory()
+        }
+
+
+        inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus && inputEditText.text.isEmpty()) {
+                showTrackHistory()
+            } else {
+                hideTrackHistory()
+            }
+        }
 
     }
 
@@ -207,6 +245,40 @@ class SearchActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         stringValue = savedInstanceState.getString(SEARCH_STRING, "")
         inputEditText.setText(stringValue)
+    }
+
+    private fun showTrackHistory() {
+        trackList.clear()
+        searchHistory.getHistoryList()
+        historyAdapter.notifyDataSetChanged()
+        //setElements(SearchStatuses.SUCCESS)
+        if (historyAdapter.itemCount > 0) {
+            historyClearButton.visibility = View.VISIBLE
+            placeholderSearch.visibility = View.VISIBLE
+            historyRecyclerView.visibility = View.VISIBLE
+        }
+        trackRecyclerView.visibility = View.GONE
+    }
+
+    private fun hideTrackHistory() {
+        searchHistory.trackHistoryList.clear()
+        historyAdapter.notifyDataSetChanged()
+        historyClearButton.visibility = View.GONE
+        placeholderSearch.visibility = View.GONE
+        historyRecyclerView.visibility = View.GONE
+        trackRecyclerView.visibility = View.VISIBLE
+    }
+
+    fun onTrackClick(view: View?) {
+        Log.d("To check click", "clicked")
+        val trackId = view?.findViewById<TextView>(R.id.track_id)?.text
+        if (!trackId.isNullOrEmpty()) {
+            val track = trackList.find { it.trackId == trackId.toString().toInt() }
+            if (track != null) {
+                searchHistory.addTrack(track)
+                Log.d("To check click", searchHistory.trackHistoryList.toString())
+            }
+        }
     }
 
     fun Context.isDarkTheme(): Boolean {
