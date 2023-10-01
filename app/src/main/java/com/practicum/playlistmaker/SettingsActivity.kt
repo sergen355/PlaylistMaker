@@ -5,8 +5,12 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
+
+    private lateinit var themeSwitcher: SwitchMaterial
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,6 +19,12 @@ class SettingsActivity : AppCompatActivity() {
         val back = findViewById<ImageView>(R.id.back)
         back.setOnClickListener {
             this.finish()
+        }
+
+        themeSwitcher = findViewById(R.id.themeSwitcher)
+
+        themeSwitcher.setOnCheckedChangeListener { switcher, isChecked ->
+            (applicationContext as App).switchTheme(isChecked)
         }
 
         val share = findViewById<ImageView>(R.id.share)
@@ -49,4 +59,9 @@ class SettingsActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun setSwitcherTheme() {
+        themeSwitcher.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+    }
+
 }
