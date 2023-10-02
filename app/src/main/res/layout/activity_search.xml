@@ -3,144 +3,126 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    tools:ignore="LabelFor"
+    style="@style/MainLayoutStyle"
 
-    style="@style/MainLayoutStyle">
+    tools:ignore="LabelFor">
 
-    <FrameLayout
-        style="@style/MainHeaderLayoutStyle"
-        >
+    <FrameLayout style="@style/MainHeaderLayoutStyle">
 
         <ImageView
             android:id="@+id/back"
-            android:contentDescription="@string/back_button"
-
             style="@style/BackButtonStyle"
-            />
+
+            android:contentDescription="@string/back_button" />
 
         <TextView
-            android:text="@string/search"
+            style="@style/HeaderStyle"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="55dp"
 
-            style="@style/HeaderStyle"/>
+            android:text="@string/search" />
 
     </FrameLayout>
 
     <LinearLayout
         style="@style/WindowLayoutStyle"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <FrameLayout
             style="@style/SearchLineBoxStyle"
 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-        >
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/edit_text"
 
-                style="@style/SearchLineStyle"
-                />
+                style="@style/SearchLineStyle" />
 
             <ImageView
                 android:id="@+id/clear_icon"
-                android:contentDescription="@string/clear_button"
-
                 style="@style/CloseButtonImageViewStyle"
-                 />
+
+                android:contentDescription="@string/clear_button" />
         </FrameLayout>
 
         <ImageView
             android:id="@+id/placeholder_image"
 
-            android:contentDescription="@string/placeholder_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@null"
-            android:visibility="gone"
             android:layout_marginTop="102dp"
-            />
+            android:contentDescription="@string/placeholder_image"
+            android:src="@null"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/placeholder_message"
+            style="@style/PlaceholderTextStyle"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginTop="16dp"
 
-            style="@style/PlaceholderTextStyle"
-            />
+            android:gravity="center" />
 
         <Button
             android:id="@+id/placeholder_button"
-            android:visibility="gone"
+            style="@style/UpdateButton"
             android:layout_marginTop="16dp"
 
-            style="@style/UpdateButton"
-            />
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/track_recycler_view"
 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
 
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-    <TextView
-        android:id="@+id/placeholder_history_text"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        style="@style/PlaceholderTextStyle"
-
-        android:text="@string/history_search"
-        />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top">
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <LinearLayout
-            android:id="@+id/clear_history_button_layout"
-            style="@style/WindowLayoutStyle"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/placeholder_history_text"
+                style="@style/PlaceholderTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/history_search"
+
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/history_recycler_view"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_weight="1"
+                android:visibility="gone"
+
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <Button
                 android:id="@+id/clear_history_button"
                 style="@style/UpdateButton"
-                android:layout_marginTop="16dp"
-                android:text="@string/clear_history"
-                android:visibility="visible"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_weight="0"
+                android:text="@string/clear_history"
+                android:visibility="gone"
 
                 />
 
         </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_recycler_view"
-        android:layout_above="@id/clear_history_button_layout"
-
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
-        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
-
-
-    </LinearLayout>
