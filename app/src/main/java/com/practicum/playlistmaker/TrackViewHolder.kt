@@ -24,9 +24,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         trackDur.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTimeMillis)
         trackId.text = model.trackId.toString()
 
-        Glide.with(itemView)
-            .load(model.artworkUrl100)
-            .placeholder(R.drawable.album_placeholder)
+        Glide.with(itemView).load(model.artworkUrl100).placeholder(R.drawable.album_placeholder)
             .centerInside()
             .transform(RoundedCorners(itemView.context.resources.getDimensionPixelSize(R.dimen.image_corner_radius)))
             .into(trackImage)

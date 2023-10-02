@@ -53,16 +53,16 @@ class SettingsActivity : AppCompatActivity() {
         val eula = findViewById<ImageView>(R.id.eula)
         eula.setOnClickListener {
             val eulaIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(getString(R.string.practicum_offer))
+                Intent.ACTION_VIEW, Uri.parse(getString(R.string.practicum_offer))
             )
             startActivity(eulaIntent)
         }
 
     }
 
-   private fun setSwitcherTheme() {
-     themeSwitcher.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
-   }
+    private fun setSwitcherTheme() {
+        themeSwitcher.isChecked =
+            AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+    }
 
 }

@@ -1,7 +1,6 @@
 package com.practicum.playlistmaker
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,7 +15,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,8 +22,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
-
-const val PLAYLIST_MAKER_HISTORY = "playlist_maker_history"
 
 class SearchActivity : AppCompatActivity() {
 
@@ -45,14 +41,13 @@ class SearchActivity : AppCompatActivity() {
 
     val trackList: MutableList<Track> = ArrayList()
     val trackAdapter = TrackAdapter(trackList)
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://itunes.apple.com")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private val retrofit = Retrofit.Builder().baseUrl("https://itunes.apple.com")
+        .addConverterFactory(GsonConverterFactory.create()).build()
     private val iTunesApi = retrofit.create<ITunesApi>()
 
     companion object {
-        const val SEARCH_STRING = "SEARCH_STRING"
+        const private val SEARCH_STRING = "SEARCH_STRING"
+        const private val PLAYLIST_MAKER_HISTORY = "playlist_maker_history"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,8 +143,7 @@ class SearchActivity : AppCompatActivity() {
         iTunesApi.search("song", inputEditText.text.toString())
             .enqueue(object : Callback<TrackResponse> {
                 override fun onResponse(
-                    call: Call<TrackResponse>,
-                    response: Response<TrackResponse>
+                    call: Call<TrackResponse>, response: Response<TrackResponse>
                 ) {
                     if (response.code() == 200) {
                         trackList.clear()
@@ -171,8 +165,7 @@ class SearchActivity : AppCompatActivity() {
                         }
                     } else {
                         showMessage(
-                            getString(R.string.something_went_wrong),
-                            response.code().toString()
+                            getString(R.string.something_went_wrong), response.code().toString()
                         )
                         if (isDarkTheme()) {
                             showImage(R.drawable.placeholder_songs_no_connection_dark)
@@ -185,8 +178,7 @@ class SearchActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
                     showMessage(
-                        getString(R.string.something_went_wrong),
-                        t.toString()
+                        getString(R.string.something_went_wrong), t.toString()
                     )
                     if (isDarkTheme()) {
                         showImage(R.drawable.placeholder_songs_no_connection_dark)
@@ -205,8 +197,7 @@ class SearchActivity : AppCompatActivity() {
             placeholderMessage.text = text
             placeholderMessage.visibility = View.VISIBLE
             if (additionalMessage.isNotEmpty()) {
-                Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -252,7 +243,6 @@ class SearchActivity : AppCompatActivity() {
         trackList.clear()
         searchHistory.getHistoryList()
         historyAdapter.notifyDataSetChanged()
-        //setElements(SearchStatuses.SUCCESS)
         if (historyAdapter.itemCount > 0) {
             historyClearButton.visibility = View.VISIBLE
             placeholderSearch.visibility = View.VISIBLE
