@@ -5,17 +5,28 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
+
+    private lateinit var themeSwitcher: SwitchMaterial
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+        themeSwitcher = findViewById<SwitchMaterial>(R.id.theme_switcher)
+        themeSwitcher.setOnCheckedChangeListener { switcher, isChecked ->
+            (applicationContext as App).switchTheme(isChecked)
+        }
+        setSwitcherTheme()
+
         val back = findViewById<ImageView>(R.id.back)
         back.setOnClickListener {
             this.finish()
         }
+
 
         val share = findViewById<ImageView>(R.id.share)
         share.setOnClickListener {
@@ -42,11 +53,16 @@ class SettingsActivity : AppCompatActivity() {
         val eula = findViewById<ImageView>(R.id.eula)
         eula.setOnClickListener {
             val eulaIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(getString(R.string.practicum_offer))
+                Intent.ACTION_VIEW, Uri.parse(getString(R.string.practicum_offer))
             )
             startActivity(eulaIntent)
         }
 
     }
+
+    private fun setSwitcherTheme() {
+        themeSwitcher.isChecked =
+            AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+    }
+
 }

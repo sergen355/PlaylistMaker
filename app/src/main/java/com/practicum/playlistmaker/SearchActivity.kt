@@ -29,36 +29,51 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var inputEditText: EditText
     private lateinit var clearButton: ImageView
     private lateinit var back: ImageView
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var trackRecyclerView: RecyclerView
+    private lateinit var historyRecyclerView: RecyclerView
     private lateinit var placeholderMessage: TextView
     private lateinit var placeholderImage: ImageView
     private lateinit var placeholderUpdateButton: Button
+    private lateinit var placeholderSearch: TextView
+    private lateinit var historyClearButton: Button
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var historyAdapter: TrackAdapter
 
     val trackList: MutableList<Track> = ArrayList()
     val trackAdapter = TrackAdapter(trackList)
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://itunes.apple.com")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private val retrofit = Retrofit.Builder().baseUrl("https://itunes.apple.com")
+        .addConverterFactory(GsonConverterFactory.create()).build()
     private val iTunesApi = retrofit.create<ITunesApi>()
 
     companion object {
-        const val SEARCH_STRING = "SEARCH_STRING"
+        const private val SEARCH_STRING = "SEARCH_STRING"
+        const private val PLAYLIST_MAKER_HISTORY = "playlist_maker_history"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        var sharedPrefs = getSharedPreferences(PLAYLIST_MAKER_HISTORY, MODE_PRIVATE)
+        searchHistory = SearchHistory(sharedPrefs)
 
-        recyclerView = findViewById(R.id.recycler_view)
+        historyAdapter = TrackAdapter(searchHistory.trackHistoryList)
+        trackRecyclerView = findViewById(R.id.track_recycler_view)
+        historyRecyclerView = findViewById(R.id.history_recycler_view)
         placeholderMessage = findViewById(R.id.placeholder_message)
         placeholderImage = findViewById(R.id.placeholder_image)
         placeholderUpdateButton = findViewById(R.id.placeholder_button)
+        placeholderSearch = findViewById(R.id.placeholder_history_text)
+        historyClearButton = findViewById(R.id.clear_history_button)
         inputEditText = findViewById(R.id.edit_text)
         clearButton = findViewById(R.id.clear_icon)
         back = findViewById(R.id.back)
 
-        recyclerView.adapter = trackAdapter
+        trackRecyclerView.adapter = trackAdapter
+        historyRecyclerView.adapter = historyAdapter
+
+        searchHistory.getHistoryList()
+
+        showTrackHistory()
 
         inputEditText.requestFocus()
 
@@ -86,6 +101,11 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
+                if (inputEditText.hasFocus() && s.isNullOrEmpty()) {
+                    showTrackHistory()
+                } else {
+                    hideTrackHistory()
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -102,6 +122,20 @@ class SearchActivity : AppCompatActivity() {
 
         inputEditText.addTextChangedListener(simpleTextWatcher)
 
+        historyClearButton.setOnClickListener {
+            searchHistory.clearHistory()
+            hideTrackHistory()
+        }
+
+
+        inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus && inputEditText.text.isEmpty()) {
+                showTrackHistory()
+            } else {
+                hideTrackHistory()
+            }
+        }
+
     }
 
     private fun trackSearch() {
@@ -109,8 +143,7 @@ class SearchActivity : AppCompatActivity() {
         iTunesApi.search("song", inputEditText.text.toString())
             .enqueue(object : Callback<TrackResponse> {
                 override fun onResponse(
-                    call: Call<TrackResponse>,
-                    response: Response<TrackResponse>
+                    call: Call<TrackResponse>, response: Response<TrackResponse>
                 ) {
                     if (response.code() == 200) {
                         trackList.clear()
@@ -132,8 +165,7 @@ class SearchActivity : AppCompatActivity() {
                         }
                     } else {
                         showMessage(
-                            getString(R.string.something_went_wrong),
-                            response.code().toString()
+                            getString(R.string.something_went_wrong), response.code().toString()
                         )
                         if (isDarkTheme()) {
                             showImage(R.drawable.placeholder_songs_no_connection_dark)
@@ -146,8 +178,7 @@ class SearchActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
                     showMessage(
-                        getString(R.string.something_went_wrong),
-                        t.toString()
+                        getString(R.string.something_went_wrong), t.toString()
                     )
                     if (isDarkTheme()) {
                         showImage(R.drawable.placeholder_songs_no_connection_dark)
@@ -166,8 +197,7 @@ class SearchActivity : AppCompatActivity() {
             placeholderMessage.text = text
             placeholderMessage.visibility = View.VISIBLE
             if (additionalMessage.isNotEmpty()) {
-                Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -207,6 +237,39 @@ class SearchActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         stringValue = savedInstanceState.getString(SEARCH_STRING, "")
         inputEditText.setText(stringValue)
+    }
+
+    private fun showTrackHistory() {
+        trackList.clear()
+        searchHistory.getHistoryList()
+        historyAdapter.notifyDataSetChanged()
+        if (historyAdapter.itemCount > 0) {
+            historyClearButton.visibility = View.VISIBLE
+            placeholderSearch.visibility = View.VISIBLE
+            historyRecyclerView.visibility = View.VISIBLE
+        }
+        trackRecyclerView.visibility = View.GONE
+    }
+
+    private fun hideTrackHistory() {
+        searchHistory.trackHistoryList.clear()
+        historyAdapter.notifyDataSetChanged()
+        historyClearButton.visibility = View.GONE
+        placeholderSearch.visibility = View.GONE
+        historyRecyclerView.visibility = View.GONE
+        trackRecyclerView.visibility = View.VISIBLE
+    }
+
+    fun onTrackClick(view: View?) {
+        Log.d("To check click", "clicked")
+        val trackId = view?.findViewById<TextView>(R.id.track_id)?.text
+        if (!trackId.isNullOrEmpty()) {
+            val track = trackList.find { it.trackId == trackId.toString().toInt() }
+            if (track != null) {
+                searchHistory.addTrack(track)
+                Log.d("To check click", searchHistory.trackHistoryList.toString())
+            }
+        }
     }
 
     fun Context.isDarkTheme(): Boolean {

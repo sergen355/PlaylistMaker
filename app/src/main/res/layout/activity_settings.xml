@@ -30,7 +30,8 @@
 
                 android:text="@string/dark_theme" />
 
-            <Switch
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/theme_switcher"
                 style="@style/ListElementImageViewStyle"
                 android:scaleX="@dimen/switch_scale"
 
