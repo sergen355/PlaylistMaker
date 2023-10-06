@@ -21,6 +21,7 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         val track = intent.getSerializableExtra("track") as? Track
+        val trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track?.trackTimeMillis)
 
         fun getAlbumCover() = track?.artworkUrl100?.replaceAfterLast('/', "512x512bb.jpg")
 
@@ -31,13 +32,14 @@ class PlayerActivity : AppCompatActivity() {
         val year = findViewById<TextView>(R.id.year)
         val genre = findViewById<TextView>(R.id.genre)
         val country = findViewById<TextView>(R.id.country)
+        val duration = findViewById<TextView>(R.id.duration)
 
         val albumCover: ImageView = findViewById(R.id.album_cover)
 
         artist.text = track?.artistName
         track_name.text = track?.trackName
-        playback_time.text =
-            SimpleDateFormat("mm:ss", Locale.getDefault()).format(track?.trackTimeMillis)
+        playback_time.text = trackTime
+        duration.text = trackTime
         album.text = track?.collectionName
         year.text = track?.releaseDate?.substring(0, 4)
         genre.text = track?.primaryGenreName

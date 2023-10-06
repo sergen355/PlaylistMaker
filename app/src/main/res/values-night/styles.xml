@@ -58,6 +58,7 @@
         <item name="android:layout_height">@dimen/layout_back_arrow</item>
         <item name="android:src">@drawable/left_arrow</item>
         <item name="android:tint">@color/yp_white</item>
+        <item name="android:backgroundTint">@color/background_dark</item>
     </style>
 
     <style name="ListElementStyle">

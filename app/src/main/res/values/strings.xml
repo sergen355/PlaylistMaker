@@ -26,6 +26,7 @@
     <string name="placeholder_image">Placeholder image</string>
 
     <string name="app_name">Playlist Maker</string>
+    <string name="placeholder">Placeholder</string>
 
     <string name="search">Поиск</string>
     <string name="medialibrary">Медиатека</string>
@@ -48,4 +49,14 @@
     <string name="something_went_wrong">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
     <string name="clear_history">Очистить историю</string>
     <string name="history_search">Вы искали</string>
+
+    <string name="duration">Длительность</string>
+    <string name="album">Альбом</string>
+    <string name="year">Год</string>
+    <string name="genre">Жанр</string>
+    <string name="country">Страна</string>
+
+    <string name="play">Играть</string>
+    <string name="add_to_favourites">Добавить в любимые</string>
+    <string name="add_to_playlist">Добавить в плейлист</string>
 </resources>
