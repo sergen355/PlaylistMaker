@@ -150,4 +150,19 @@
         <item name="cornerRadius">@dimen/update_button_corner_radius</item>
     </style>
 
+    <style name="trackDetailMain">
+        <item name="android:textColor">@color/yp_black</item>
+        <item name="android:background">@color/yp_white</item>
+    </style>
+
+    <style name="trackDetailButtonPlay">
+        <item name="android:background">@color/yp_white</item>
+        <item name="android:tint">@color/yp_black</item>
+    </style>
+
+    <style name="trackDetailButtonGray">
+        <item name="android:tint">@color/yp_black</item>
+        <item name="android:background">@color/yp_white</item>
+    </style>
+
 </resources>

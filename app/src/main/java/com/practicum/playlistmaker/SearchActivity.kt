@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -261,14 +262,20 @@ class SearchActivity : AppCompatActivity() {
     }
 
     fun onTrackClick(view: View?) {
-        Log.d("To check click", "clicked")
         val trackId = view?.findViewById<TextView>(R.id.track_id)?.text
+        var track: Track? = null
         if (!trackId.isNullOrEmpty()) {
-            val track = trackList.find { it.trackId == trackId.toString().toInt() }
+            track = trackList.find { it.trackId == trackId.toString().toInt() }
             if (track != null) {
                 searchHistory.addTrack(track)
-                Log.d("To check click", searchHistory.trackHistoryList.toString())
+            } else {
+                track = searchHistory.trackHistoryList.find { it.trackId == trackId.toString().toInt()}
             }
+
+            val displayIntent = Intent(this, PlayerActivity::class.java)
+            displayIntent.putExtra("track", track)
+            startActivity(displayIntent)
+
         }
     }
 
