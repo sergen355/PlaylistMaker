@@ -156,13 +156,13 @@
     </style>
 
     <style name="trackDetailButtonPlay">
-        <item name="android:background">#121212</item>
+        <item name="android:background">@color/background_dark</item>
         <item name="android:tint">@color/yp_white</item>
     </style>
 
     <style name="trackDetailButtonGray">
         <item name="android:tint">@color/yp_white</item>
-        <item name="android:background">#121212</item>
+        <item name="android:background">@color/background_dark</item>
     </style>
 
 </resources>

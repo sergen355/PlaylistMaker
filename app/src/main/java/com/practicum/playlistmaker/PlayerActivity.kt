@@ -26,8 +26,8 @@ class PlayerActivity : AppCompatActivity() {
         fun getAlbumCover() = track?.artworkUrl100?.replaceAfterLast('/', "512x512bb.jpg")
 
         val artist = findViewById<TextView>(R.id.artist)
-        val track_name = findViewById<TextView>(R.id.track)
-        val playback_time = findViewById<TextView>(R.id.playback_time)
+        val trackName = findViewById<TextView>(R.id.track)
+        val playbackTime = findViewById<TextView>(R.id.playback_time)
         val album = findViewById<TextView>(R.id.album)
         val year = findViewById<TextView>(R.id.year)
         val genre = findViewById<TextView>(R.id.genre)
@@ -37,8 +37,8 @@ class PlayerActivity : AppCompatActivity() {
         val albumCover: ImageView = findViewById(R.id.album_cover)
 
         artist.text = track?.artistName
-        track_name.text = track?.trackName
-        playback_time.text = trackTime
+        trackName.text = track?.trackName
+        playbackTime.text = trackTime
         duration.text = trackTime
         album.text = track?.collectionName
         year.text = track?.releaseDate?.substring(0, 4)
