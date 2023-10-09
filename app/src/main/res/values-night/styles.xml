@@ -58,6 +58,7 @@
         <item name="android:layout_height">@dimen/layout_back_arrow</item>
         <item name="android:src">@drawable/left_arrow</item>
         <item name="android:tint">@color/yp_white</item>
+        <item name="android:backgroundTint">@color/background_dark</item>
     </style>
 
     <style name="ListElementStyle">
@@ -150,5 +151,18 @@
         <item name="cornerRadius">@dimen/update_button_corner_radius</item>
     </style>
 
+    <style name="trackDetailMain">
+        <item name="android:textColor">@color/yp_white</item>
+    </style>
+
+    <style name="trackDetailButtonPlay">
+        <item name="android:background">@color/background_dark</item>
+        <item name="android:tint">@color/yp_white</item>
+    </style>
+
+    <style name="trackDetailButtonGray">
+        <item name="android:tint">@color/yp_white</item>
+        <item name="android:background">@color/background_dark</item>
+    </style>
 
 </resources>
