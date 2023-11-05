@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -39,22 +42,28 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var historyClearButton: Button
     private lateinit var searchHistory: SearchHistory
     private lateinit var historyAdapter: TrackAdapter
+    private lateinit var searchProgressBar: ProgressBar
 
     val trackList: MutableList<Track> = ArrayList()
     val trackAdapter = TrackAdapter(trackList)
     private val retrofit = Retrofit.Builder().baseUrl("https://itunes.apple.com")
         .addConverterFactory(GsonConverterFactory.create()).build()
     private val iTunesApi = retrofit.create<ITunesApi>()
+    private val searchRunnable = Runnable { trackSearch() }
+    private var isClickAllowed = true
+    private val handler = Handler(Looper.getMainLooper())
 
     companion object {
         const private val SEARCH_STRING = "SEARCH_STRING"
         const private val PLAYLIST_MAKER_HISTORY = "playlist_maker_history"
+        const private val CLICK_DEBOUNCE_DELAY = 1000L
+        const private val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        var sharedPrefs = getSharedPreferences(PLAYLIST_MAKER_HISTORY, MODE_PRIVATE)
+        val sharedPrefs = getSharedPreferences(PLAYLIST_MAKER_HISTORY, MODE_PRIVATE)
         searchHistory = SearchHistory(sharedPrefs)
 
         historyAdapter = TrackAdapter(searchHistory.trackHistoryList)
@@ -68,6 +77,7 @@ class SearchActivity : AppCompatActivity() {
         inputEditText = findViewById(R.id.edit_text)
         clearButton = findViewById(R.id.clear_icon)
         back = findViewById(R.id.back)
+        searchProgressBar = findViewById(R.id.search_progress_bar)
 
         trackRecyclerView.adapter = trackAdapter
         historyRecyclerView.adapter = historyAdapter
@@ -111,6 +121,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 stringValue = inputEditText.text.toString()
+                trackSearch()
             }
         }
 
@@ -141,6 +152,8 @@ class SearchActivity : AppCompatActivity() {
 
     private fun trackSearch() {
         hidePlaceholders()
+        searchProgressBar.visibility = View.VISIBLE
+        trackRecyclerView.visibility = View.GONE
         iTunesApi.search("song", inputEditText.text.toString())
             .enqueue(object : Callback<TrackResponse> {
                 override fun onResponse(
@@ -153,6 +166,8 @@ class SearchActivity : AppCompatActivity() {
                         if (response.body()?.results?.isNotEmpty() == true) {
                             trackList.addAll(response.body()?.results!!)
                             trackAdapter.notifyDataSetChanged()
+                            searchProgressBar.visibility = View.GONE
+                            trackRecyclerView.visibility = View.VISIBLE
                         }
                         if (trackList.isEmpty()) {
                             showMessage(getString(R.string.nothing_found), "")
@@ -189,6 +204,7 @@ class SearchActivity : AppCompatActivity() {
                     showUpdateButton()
                 }
             })
+        searchDebounce()
     }
 
     private fun showMessage(text: String, additionalMessage: String) {
@@ -197,6 +213,7 @@ class SearchActivity : AppCompatActivity() {
             trackAdapter.notifyDataSetChanged()
             placeholderMessage.text = text
             placeholderMessage.visibility = View.VISIBLE
+            searchProgressBar.visibility = View.GONE
             if (additionalMessage.isNotEmpty()) {
                 Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG).show()
             }
@@ -261,21 +278,39 @@ class SearchActivity : AppCompatActivity() {
         trackRecyclerView.visibility = View.VISIBLE
     }
 
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
+
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+    }
+
     fun onTrackClick(view: View?) {
-        val trackId = view?.findViewById<TextView>(R.id.track_id)?.text
-        var track: Track? = null
-        if (!trackId.isNullOrEmpty()) {
-            track = trackList.find { it.trackId == trackId.toString().toInt() }
-            if (track != null) {
-                searchHistory.addTrack(track)
-            } else {
-                track = searchHistory.trackHistoryList.find { it.trackId == trackId.toString().toInt()}
+        if (clickDebounce()) {
+            val trackId = view?.findViewById<TextView>(R.id.track_id)?.text
+            var track: Track?
+            if (!trackId.isNullOrEmpty()) {
+                track = trackList.find { it.trackId == trackId.toString().toInt() }
+                if (track != null) {
+                    searchHistory.addTrack(track)
+                } else {
+                    track = searchHistory.trackHistoryList.find {
+                        it.trackId == trackId.toString().toInt()
+                    }
+                }
+
+                val displayIntent = Intent(this, PlayerActivity::class.java)
+                displayIntent.putExtra("track", track)
+                startActivity(displayIntent)
+
             }
-
-            val displayIntent = Intent(this, PlayerActivity::class.java)
-            displayIntent.putExtra("track", track)
-            startActivity(displayIntent)
-
         }
     }
 
