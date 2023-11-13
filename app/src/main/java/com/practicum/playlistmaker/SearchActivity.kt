@@ -121,7 +121,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 stringValue = inputEditText.text.toString()
-                trackSearch()
+                searchDebounce()
             }
         }
 
@@ -204,7 +204,6 @@ class SearchActivity : AppCompatActivity() {
                     showUpdateButton()
                 }
             })
-        searchDebounce()
     }
 
     private fun showMessage(text: String, additionalMessage: String) {
