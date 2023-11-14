@@ -47,6 +47,15 @@
                 android:contentDescription="@string/clear_button" />
         </FrameLayout>
 
+        <ProgressBar
+            android:id="@+id/search_progress_bar"
+            android:layout_width="@dimen/progress_bar_size"
+            android:layout_height="@dimen/progress_bar_size"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/progress_bar_margin"
+            android:indeterminateTint="@color/progress_bar_color"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/placeholder_image"
 
