@@ -26,7 +26,6 @@ import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.data.impl.TrackResponse
 import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
-import com.practicum.playlistmaker.domain.impl.SearchHistoryInteractorImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

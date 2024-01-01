@@ -1,7 +1,5 @@
 package com.practicum.playlistmaker.domain.impl
 
-import android.content.SharedPreferences
-import com.practicum.playlistmaker.data.api.PlayTrackRepository
 import com.practicum.playlistmaker.data.api.SearchHistoryRepository
 import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.domain.model.Track
