@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.presentation.ui
 
 import android.content.Context
 import android.content.Intent
@@ -20,6 +20,13 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.practicum.playlistmaker.Creator
+import com.practicum.playlistmaker.data.api.ITunesApi
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.data.impl.TrackResponse
+import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
+import com.practicum.playlistmaker.domain.impl.SearchHistoryInteractorImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,7 +47,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var placeholderUpdateButton: Button
     private lateinit var placeholderSearch: TextView
     private lateinit var historyClearButton: Button
-    private lateinit var searchHistory: SearchHistory
+    private lateinit var searchHistory: SearchHistoryInteractor
     private lateinit var historyAdapter: TrackAdapter
     private lateinit var searchProgressBar: ProgressBar
 
@@ -64,9 +71,9 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         val sharedPrefs = getSharedPreferences(PLAYLIST_MAKER_HISTORY, MODE_PRIVATE)
-        searchHistory = SearchHistory(sharedPrefs)
+        searchHistory = Creator.provideSearchHistoryInteractor(sharedPrefs)
 
-        historyAdapter = TrackAdapter(searchHistory.trackHistoryList)
+        historyAdapter = TrackAdapter(searchHistory.getTrackList())
         trackRecyclerView = findViewById(R.id.track_recycler_view)
         historyRecyclerView = findViewById(R.id.history_recycler_view)
         placeholderMessage = findViewById(R.id.placeholder_message)
@@ -270,7 +277,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun hideTrackHistory() {
-        searchHistory.trackHistoryList.clear()
+        searchHistory.clearTrackList()
         historyAdapter.notifyDataSetChanged()
         historyClearButton.visibility = View.GONE
         placeholderSearch.visibility = View.GONE
@@ -301,7 +308,7 @@ class SearchActivity : AppCompatActivity() {
                 if (track != null) {
                     searchHistory.addTrack(track)
                 } else {
-                    track = searchHistory.trackHistoryList.find {
+                    track = searchHistory.getTrackList().find {
                         it.trackId == trackId.toString().toInt()
                     }
                 }
