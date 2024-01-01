@@ -7,6 +7,7 @@ import android.os.Looper
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlistmaker.Creator
@@ -90,8 +91,7 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         val track = intent.getSerializableExtra("track") as? Track
-        var trackUrl = ""
-        trackUrl = if (track?.previewUrl == null) {
+        val trackUrl = if (track?.previewUrl == null) {
             ""
         } else {
             track.previewUrl
@@ -147,16 +147,16 @@ class PlayerActivity : AppCompatActivity() {
             setPlayIcon()
             currentPlayPosition = 0
             handler.removeCallbacks(timeChangeRunnable)
-            playbackTime.text = "00:00"
+            playbackTime.text = getString(R.string.zero_time)
         }
     }
 
     private fun setPlayIcon() {
-        play.setImageDrawable(getResources().getDrawable(R.drawable.play))
+        play.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.play, null))
     }
 
     private fun setPauseIcon() {
-        play.setImageDrawable(getResources().getDrawable(R.drawable.pause))
+        play.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.pause, null))
     }
 
 }
