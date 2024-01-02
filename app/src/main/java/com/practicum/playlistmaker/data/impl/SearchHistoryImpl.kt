@@ -1,17 +1,20 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.data.impl
 
 import android.content.SharedPreferences
+import com.practicum.playlistmaker.data.api.SearchHistoryRepository
+
+import com.practicum.playlistmaker.domain.model.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-private const val HISTORY_KEY = "history_list"
-private const val HISTORY_TRACK_AMOUNT: Int = 10
 
-class SearchHistory(private val sharedPrefs: SharedPreferences) {
+class SearchHistoryImpl(private val sharedPrefs: SharedPreferences): SearchHistoryRepository {
+    private val MAX_TRACK_IN_HISTORY: Int = 10
+    private val HISTORY_KEY = "historyList"
 
     var trackHistoryList: MutableList<Track> = ArrayList()
 
-    fun addTrack(track: Track) {
+    override fun addTrack(track: Track) {
         val historyList = sharedPrefs.getString(HISTORY_KEY, "")
 
         if (historyList.isNullOrEmpty()) {
@@ -26,8 +29,8 @@ class SearchHistory(private val sharedPrefs: SharedPreferences) {
                 trackHistoryList.remove(track)
                 trackHistoryList.add(0, track)
             } else {
-                if (trackHistoryList.size == HISTORY_TRACK_AMOUNT) {
-                    trackHistoryList.removeAt(HISTORY_TRACK_AMOUNT - 1)
+                if (trackHistoryList.size == MAX_TRACK_IN_HISTORY) {
+                    trackHistoryList.removeAt(MAX_TRACK_IN_HISTORY - 1)
                     trackHistoryList.add(0, track)
                 } else {
                     trackHistoryList.add(0, track)
@@ -38,7 +41,7 @@ class SearchHistory(private val sharedPrefs: SharedPreferences) {
         sharedPrefs.edit().putString(HISTORY_KEY, Gson().toJson(trackHistoryList)).apply()
     }
 
-    fun getHistoryList() {
+    override fun getHistoryList() {
         val historyList = sharedPrefs.getString(HISTORY_KEY, "")
         val typeToken = object : TypeToken<MutableList<Track>>() {}.type
         trackHistoryList.clear()
@@ -48,7 +51,19 @@ class SearchHistory(private val sharedPrefs: SharedPreferences) {
         }
     }
 
-    fun clearHistory() {
+    override fun clearHistory() {
         sharedPrefs.edit().putString(HISTORY_KEY, "").apply()
     }
+
+    override fun clearTrackList() {
+        trackHistoryList.clear()
+    }
+
+    override fun getTrackList() : MutableList<Track> {
+        return trackHistoryList
+    }
+
+
+
+
 }
