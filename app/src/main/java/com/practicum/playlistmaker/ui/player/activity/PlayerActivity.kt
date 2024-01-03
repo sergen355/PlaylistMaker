@@ -10,14 +10,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.PlayingStatus
-import com.practicum.playlistmaker.ui.player.view_model.PlayerActivityViewModel
+import com.practicum.playlistmaker.ui.player.view_model.PlayerViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class PlayerActivity : AppCompatActivity() {
 
 
-    private lateinit var playerActivityViewModel: PlayerActivityViewModel
+    private lateinit var playerActivityViewModel: PlayerViewModel
     private lateinit var play: ImageView
     private lateinit var playbackTime: TextView
 
@@ -43,8 +43,8 @@ class PlayerActivity : AppCompatActivity() {
 
         playerActivityViewModel = ViewModelProvider(
             this,
-            PlayerActivityViewModel.getViewModelFactory()
-        )[PlayerActivityViewModel::class.java]
+            PlayerViewModel.getViewModelFactory()
+        )[PlayerViewModel::class.java]
 
 
         val back = findViewById<ImageView>(R.id.back)

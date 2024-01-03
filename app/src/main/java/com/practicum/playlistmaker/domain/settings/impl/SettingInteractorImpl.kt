@@ -1,6 +1,6 @@
 package com.practicum.playlistmaker.domain.settings.impl
 
-import com.practicum.playlistmaker.data.settings.SettingRepository
+import com.practicum.playlistmaker.domain.settings.SettingRepository
 import com.practicum.playlistmaker.domain.settings.SettingInteractor
 
 class SettingInteractorImpl(private val settingRepository: SettingRepository) : SettingInteractor {

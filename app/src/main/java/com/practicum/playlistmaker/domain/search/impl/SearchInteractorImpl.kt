@@ -1,6 +1,6 @@
 package com.practicum.playlistmaker.domain.search.impl
 
-import com.practicum.playlistmaker.data.search.SearchRepository
+import com.practicum.playlistmaker.domain.search.SearchRepository
 import com.practicum.playlistmaker.domain.search.SearchInteractor
 import java.util.concurrent.Executors
 

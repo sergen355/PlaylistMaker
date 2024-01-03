@@ -1,7 +1,7 @@
 package com.practicum.playlistmaker.data.player.impl
 
 import android.media.MediaPlayer
-import com.practicum.playlistmaker.data.player.PlayTrackRepository
+import com.practicum.playlistmaker.domain.player.PlayTrackRepository
 import com.practicum.playlistmaker.domain.model.PlayerState
 
 class PlayTrackRepositoryImpl : PlayTrackRepository {

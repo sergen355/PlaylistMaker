@@ -3,7 +3,8 @@
 
     style="@style/MainLayoutStyle">
 
-    <FrameLayout style="@style/MainHeaderLayoutStyle">
+    <FrameLayout style="@style/MainHeaderLayoutStyle"
+        android:padding="4dp">
 
         <ImageView
             android:id="@+id/back"
@@ -21,7 +22,8 @@
 
     </FrameLayout>
 
-    <LinearLayout style="@style/WindowLayoutStyle">
+    <LinearLayout style="@style/WindowLayoutStyle"
+        android:padding="@dimen/padding">
 
         <FrameLayout style="@style/ListElementStyle">
 

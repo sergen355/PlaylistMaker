@@ -2,7 +2,7 @@ package com.practicum.playlistmaker.data.settings.impl
 
 import android.content.SharedPreferences
 import com.practicum.playlistmaker.App.Companion.DARK_THEME_KEY
-import com.practicum.playlistmaker.data.settings.SettingRepository
+import com.practicum.playlistmaker.domain.settings.SettingRepository
 
 class SettingRepositoryImpl(private val sharedPreferences: SharedPreferences) : SettingRepository {
     override fun getStoredTheme(): Boolean {

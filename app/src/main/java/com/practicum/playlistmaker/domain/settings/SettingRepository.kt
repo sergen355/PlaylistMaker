@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.data.settings
+package com.practicum.playlistmaker.domain.settings
 
 interface SettingRepository {
     fun getStoredTheme(): Boolean

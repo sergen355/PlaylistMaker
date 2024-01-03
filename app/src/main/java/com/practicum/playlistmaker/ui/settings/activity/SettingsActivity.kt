@@ -7,6 +7,7 @@ import android.widget.CompoundButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.practicum.playlistmaker.App.Companion.PLAYLIST_MAKER_PREFERENCES
@@ -26,10 +27,13 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
         themeSwitcher = findViewById<SwitchMaterial>(R.id.theme_switcher)
+        themeSwitcher.isUseMaterialThemeColors = false
+        themeSwitcher.thumbTintList = ContextCompat.getColorStateList(this,R.color.thumb_selector)
+        themeSwitcher.trackTintList = ContextCompat.getColorStateList(this, R.color.track_selector)
 
         sharedPrefs = getSharedPreferences(PLAYLIST_MAKER_PREFERENCES, MODE_PRIVATE)
-
 
         settingsViewModel = ViewModelProvider(
             this,
@@ -41,7 +45,7 @@ class SettingsActivity : AppCompatActivity() {
             themeSwitcher.isChecked = currentTheme
         }
 
-        themeSwitcher.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        themeSwitcher.setOnCheckedChangeListener { buttonView, isChecked ->
             settingsViewModel.setTheme(isChecked)
             AppCompatDelegate.setDefaultNightMode(
                 if (isChecked) {
@@ -50,7 +54,7 @@ class SettingsActivity : AppCompatActivity() {
                     AppCompatDelegate.MODE_NIGHT_NO
                 }
             )
-        })
+        }
 
         val back = findViewById<ImageView>(R.id.back)
         back.setOnClickListener {

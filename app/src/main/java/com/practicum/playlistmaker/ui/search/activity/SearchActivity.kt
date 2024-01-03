@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker.ui.search.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +17,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +25,9 @@ import com.practicum.playlistmaker.R
 
 import com.practicum.playlistmaker.creator.Creator
 import com.practicum.playlistmaker.domain.model.SearchStatuses
+import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.search.SearchHistoryInteractor
+import com.practicum.playlistmaker.ui.player.activity.PlayerActivity
 import com.practicum.playlistmaker.ui.search.view_model.SearchViewModel
 
 
@@ -186,6 +190,14 @@ class SearchActivity : AppCompatActivity() {
 
         searchViewModel.fillHistoryList()
 
+        searchViewModel.selectedTrack.observe(this) { track ->
+            track?.let {
+                navigateToPlayerActivity(it)
+                searchViewModel.onTrackNavigationDone()
+            }
+        }
+
+
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // empty
@@ -254,6 +266,12 @@ class SearchActivity : AppCompatActivity() {
         } else {
             View.VISIBLE
         }
+    }
+
+    private fun navigateToPlayerActivity(track: Track) {
+        val displayIntent = Intent(this, PlayerActivity::class.java)
+        displayIntent.putExtra("track", track)
+        startActivity(displayIntent)
     }
 
     private fun showTrackHistory() {

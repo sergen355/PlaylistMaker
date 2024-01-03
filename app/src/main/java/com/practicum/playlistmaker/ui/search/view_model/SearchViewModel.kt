@@ -1,7 +1,6 @@
 package com.practicum.playlistmaker.ui.search.view_model
 
-import android.content.Context
-import android.content.Intent
+
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +11,6 @@ import com.practicum.playlistmaker.domain.model.SearchStatuses
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.search.SearchHistoryInteractor
 import com.practicum.playlistmaker.domain.search.SearchInteractor
-import com.practicum.playlistmaker.ui.player.activity.PlayerActivity
 
 
 class SearchViewModel(
@@ -29,6 +27,9 @@ class SearchViewModel(
 
     private var _isShowHistoryListMutable = MutableLiveData<Boolean>()
     val isShowHistoryList: LiveData<Boolean> = _isShowHistoryListMutable
+
+    private val _selectedTrack = MutableLiveData<Track?>()
+    val selectedTrack: LiveData<Track?> = _selectedTrack
 
 
     fun getTrackHistoryList(): LiveData<List<Track>> {
@@ -68,7 +69,7 @@ class SearchViewModel(
         _trackHistoryListMutable.value = listOf()
     }
 
-    fun clickTrack(context: Context, trackId: Int) {
+    fun clickTrack(trackId: Int) {
 
         var track = _trackListMutable.value?.find { it.trackId == trackId }
         if (track != null) {
@@ -79,11 +80,12 @@ class SearchViewModel(
                     it.trackId == trackId
                 }
         }
+        _selectedTrack.value = track
 
-        val displayIntent = Intent(context, PlayerActivity::class.java)
-        displayIntent.putExtra("track", track)
-        context.startActivity(displayIntent)
+    }
 
+    fun onTrackNavigationDone() {
+        _selectedTrack.value = null
     }
 
     fun searchTrack(queryString: String) {

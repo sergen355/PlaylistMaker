@@ -13,7 +13,7 @@ import com.practicum.playlistmaker.domain.model.PlayingStatus
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.player.PlayTrackInteractor
 
-class PlayerActivityViewModel(private val playTrackInteractor: PlayTrackInteractor) : ViewModel() {
+class PlayerViewModel(private val playTrackInteractor: PlayTrackInteractor) : ViewModel() {
 
     private val PLAY_DEBOUNCE_DELAY = 1000L
 
@@ -97,7 +97,7 @@ class PlayerActivityViewModel(private val playTrackInteractor: PlayTrackInteract
             object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return PlayerActivityViewModel(
+                    return PlayerViewModel(
                         Creator.providePlayTrackInteractor()
                     ) as T
                 }
