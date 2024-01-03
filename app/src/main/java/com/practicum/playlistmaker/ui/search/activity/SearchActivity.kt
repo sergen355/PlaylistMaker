@@ -292,7 +292,7 @@ class SearchActivity : AppCompatActivity() {
 
     fun onTrackClick(trackId: Int) {
         if (clickDebounce()) {
-            searchViewModel.clickTrack(this, trackId)
+            searchViewModel.clickTrack(trackId)
         }
     }
 
