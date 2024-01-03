@@ -3,7 +3,6 @@ package com.practicum.playlistmaker.ui.settings.activity
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.CompoundButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
