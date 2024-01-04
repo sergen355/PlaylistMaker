@@ -7,7 +7,9 @@
 
     tools:ignore="LabelFor">
 
-    <FrameLayout style="@style/MainHeaderLayoutStyle">
+    <FrameLayout style="@style/MainHeaderLayoutStyle"
+        android:padding="4dp">
+
 
         <ImageView
             android:id="@+id/back"
@@ -27,7 +29,8 @@
 
     <LinearLayout
         style="@style/WindowLayoutStyle"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding">
 
         <FrameLayout
             style="@style/SearchLineBoxStyle"
@@ -37,6 +40,7 @@
 
             <EditText
                 android:id="@+id/edit_text"
+                android:textCursorDrawable="@drawable/cursor"
 
                 style="@style/SearchLineStyle" />
 

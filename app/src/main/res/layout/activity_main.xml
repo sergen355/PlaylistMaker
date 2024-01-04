@@ -4,7 +4,8 @@
 
     style="@style/MainScreenLayoutStyle">
 
-    <FrameLayout style="@style/MainHeaderLayoutStyle">
+    <FrameLayout style="@style/MainHeaderLayoutStyle"
+        android:padding="@dimen/padding">
 
         <TextView
             style="@style/HeaderStyle"
@@ -16,7 +17,8 @@
             android:textColor="@color/yp_white" />
     </FrameLayout>
 
-    <LinearLayout style="@style/WindowLayoutStyle">
+    <LinearLayout style="@style/WindowLayoutStyle"
+        android:padding="@dimen/padding">
 
         <Button
             android:id="@+id/search"

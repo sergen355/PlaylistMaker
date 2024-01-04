@@ -4,7 +4,6 @@
     <style name="MainButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginBottom">@dimen/button_margin_bottom</item>
         <item name="android:layout_weight">@dimen/button_layout_weight</item>
 
         <item name="android:backgroundTint">@color/yp_white</item>
@@ -29,7 +28,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/padding</item>
     </style>
 
     <style name="MainHeaderLayoutStyle">
@@ -50,7 +48,6 @@
     <style name="WindowLayoutStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginTop">@dimen/layout_margin_top</item>
         <item name="android:orientation">vertical</item>
     </style>
 
