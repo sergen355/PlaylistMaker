@@ -97,7 +97,7 @@ class SearchViewModel(
                     if (foundTracks.isEmpty()) {
                         _searchStatusMutable.postValue(SearchStatus.EMPTY_RESULT)
                     } else if (foundTracks.isNotEmpty()) {
-                        _trackListMutable.postValue(foundTracks)
+                        _trackListMutable.postValue(foundTracks!!)
                         _searchStatusMutable.postValue(SearchStatus.SUCCESS)
                     }
                 }
