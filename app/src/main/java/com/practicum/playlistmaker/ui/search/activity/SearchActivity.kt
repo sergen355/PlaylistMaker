@@ -2,7 +2,6 @@ package com.practicum.playlistmaker.ui.search.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -17,35 +16,28 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.R
 
-import com.practicum.playlistmaker.creator.Creator
-import com.practicum.playlistmaker.domain.model.SearchStatuses
+import com.practicum.playlistmaker.domain.model.SearchStatus
 import com.practicum.playlistmaker.domain.model.Track
-import com.practicum.playlistmaker.domain.search.SearchHistoryInteractor
 import com.practicum.playlistmaker.ui.player.activity.PlayerActivity
 import com.practicum.playlistmaker.ui.search.view_model.SearchViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-const val PLAYLIST_HISTORY = "playlist_history"
 
 class SearchActivity : AppCompatActivity() {
 
-    private lateinit var searchViewModel: SearchViewModel
+    private val searchViewModel by viewModel<SearchViewModel>()
     private val CLICK_DEBOUNCE_DELAY = 1000L
     private val SEARCH_DEBOUNCE_DELAY = 2000L
     private val searchRunnable = Runnable { searchTrack() }
     private var isClickAllowed = true
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var sharedPrefs: SharedPreferences
-    private lateinit var searchHistory: SearchHistoryInteractor
     private var searchText: String = ""
     private lateinit var adapter: TrackAdapter
     private lateinit var adapterHistory: TrackAdapter
-
     private lateinit var inputEditText: EditText
     private lateinit var clearButton: ImageView
     private lateinit var back: ImageView
@@ -74,14 +66,14 @@ class SearchActivity : AppCompatActivity() {
     }
 
 
-    private fun setElements(status: SearchStatuses) {
-        if (status == SearchStatuses.SUCCESS) {
+    private fun setElements(status: SearchStatus) {
+        if (status == SearchStatus.SUCCESS) {
             searchProgressBar.visibility = View.GONE
             placeholderImage.visibility = View.GONE
             placeholderMessage.visibility = View.GONE
             placeholderUpdateButton.visibility = View.GONE
             trackRecyclerView.visibility = View.VISIBLE
-        } else if (status == SearchStatuses.CONNECTION_ERROR) {
+        } else if (status == SearchStatus.CONNECTION_ERROR) {
             searchProgressBar.visibility = View.GONE
             placeholderImage.setImageResource(R.drawable.placeholder_songs_no_connection)
             placeholderMessage.setText(R.string.something_went_wrong)
@@ -89,7 +81,7 @@ class SearchActivity : AppCompatActivity() {
             placeholderMessage.visibility = View.VISIBLE
             placeholderUpdateButton.visibility = View.VISIBLE
             trackRecyclerView.visibility = View.GONE
-        } else if (status == SearchStatuses.EMPTY_RESULT) {
+        } else if (status == SearchStatus.EMPTY_RESULT) {
             searchProgressBar.visibility = View.GONE
             placeholderImage.setImageResource(R.drawable.placeholder_songs_nothing_found)
             placeholderMessage.setText(R.string.nothing_found)
@@ -97,7 +89,7 @@ class SearchActivity : AppCompatActivity() {
             placeholderMessage.visibility = View.VISIBLE
             placeholderUpdateButton.visibility = View.GONE
             trackRecyclerView.visibility = View.GONE
-        } else if (status == SearchStatuses.IN_PROGRESS) {
+        } else if (status == SearchStatus.IN_PROGRESS) {
             searchProgressBar.visibility = View.VISIBLE
             placeholderImage.visibility = View.GONE
             placeholderMessage.visibility = View.GONE
@@ -117,16 +109,6 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sharedPrefs = getSharedPreferences(PLAYLIST_HISTORY, MODE_PRIVATE)
-
-        searchHistory = Creator.provideSearchHistoryInteractor(sharedPrefs)
-
-        searchViewModel = ViewModelProvider(
-            this,
-            SearchViewModel.getViewModelFactory(sharedPrefs)
-        )[SearchViewModel::class.java]
-
 
         setContentView(R.layout.activity_search)
 

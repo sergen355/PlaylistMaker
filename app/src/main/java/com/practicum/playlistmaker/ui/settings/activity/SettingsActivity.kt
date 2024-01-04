@@ -1,25 +1,23 @@
 package com.practicum.playlistmaker.ui.settings.activity
 
-
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.practicum.playlistmaker.App.Companion.PLAYLIST_MAKER_PREFERENCES
 
 import com.practicum.playlistmaker.R
 
 import com.practicum.playlistmaker.ui.settings.view_model.SettingsViewModel
 
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class SettingsActivity : AppCompatActivity() {
 
-    private lateinit var settingsViewModel: SettingsViewModel
-    private lateinit var sharedPrefs: SharedPreferences
+    private val settingsViewModel by viewModel<SettingsViewModel>()
+
     private lateinit var themeSwitcher: SwitchMaterial
 
 
@@ -29,15 +27,8 @@ class SettingsActivity : AppCompatActivity() {
 
         themeSwitcher = findViewById<SwitchMaterial>(R.id.theme_switcher)
         themeSwitcher.isUseMaterialThemeColors = false
-        themeSwitcher.thumbTintList = ContextCompat.getColorStateList(this,R.color.thumb_selector)
+        themeSwitcher.thumbTintList = ContextCompat.getColorStateList(this, R.color.thumb_selector)
         themeSwitcher.trackTintList = ContextCompat.getColorStateList(this, R.color.track_selector)
-
-        sharedPrefs = getSharedPreferences(PLAYLIST_MAKER_PREFERENCES, MODE_PRIVATE)
-
-        settingsViewModel = ViewModelProvider(
-            this,
-            SettingsViewModel.getViewModelFactory(sharedPrefs, this)
-        )[SettingsViewModel::class.java]
 
 
         settingsViewModel.currentTheme.observe(this) { currentTheme ->

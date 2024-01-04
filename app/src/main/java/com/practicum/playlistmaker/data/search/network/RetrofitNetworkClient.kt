@@ -3,18 +3,8 @@ package com.practicum.playlistmaker.data.search.network
 import com.practicum.playlistmaker.data.search.ITunesApi
 import com.practicum.playlistmaker.data.search.dto.Response
 import com.practicum.playlistmaker.data.search.dto.TrackSearchRequest
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitNetworkClient : NetworkClient {
-
-    private val appleBaseUrl = "https://itunes.apple.com"
-
-    private val retrofit =
-        Retrofit.Builder().baseUrl(appleBaseUrl).addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-    private val appleTrackService = retrofit.create(ITunesApi::class.java)
+class RetrofitNetworkClient(private val appleTrackService: ITunesApi) : NetworkClient {
 
     override fun doRequest(dto: Any): Response {
         if (dto is TrackSearchRequest) {
@@ -32,6 +22,5 @@ class RetrofitNetworkClient : NetworkClient {
         }
 
     }
-
 
 }
