@@ -1,6 +1,6 @@
 package com.practicum.playlistmaker.domain.settings
 
-interface SettingRepository {
+interface SettingsRepository {
     fun getStoredTheme(): Boolean
     fun setTheme(theme: Boolean)
 }

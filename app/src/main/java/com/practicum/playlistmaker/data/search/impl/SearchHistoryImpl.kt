@@ -1,15 +1,18 @@
 package com.practicum.playlistmaker.data.search.impl
 
+import android.content.Context
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.practicum.playlistmaker.domain.search.SearchHistoryRepository
 import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.domain.search.SearchHistoryRepository
 
-class SearchHistoryImpl(private val sharedPrefs: SharedPreferences) : SearchHistoryRepository {
-
+class SearchHistoryImpl(private val context: Context) : SearchHistoryRepository {
 
     private val trackHistoryList: MutableList<Track> = ArrayList()
+    private val sharedPrefs: SharedPreferences =
+        context.getSharedPreferences(PLAYLIST_HISTORY, AppCompatActivity.MODE_PRIVATE)
 
     override fun addTrack(track: Track) {
         val historyList = sharedPrefs.getString(HISTORY_KEY, "")
@@ -64,7 +67,7 @@ class SearchHistoryImpl(private val sharedPrefs: SharedPreferences) : SearchHist
     companion object {
         private val MAX_TRACK_IN_HISTORY: Int = 10
         private val HISTORY_KEY = "historyList"
+        private val PLAYLIST_HISTORY = "playlist_history"
     }
-
 
 }

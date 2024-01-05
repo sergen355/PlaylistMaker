@@ -6,8 +6,6 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.practicum.playlistmaker.creator.Creator
 import com.practicum.playlistmaker.domain.model.PlayerState
 import com.practicum.playlistmaker.domain.model.PlayingStatus
 import com.practicum.playlistmaker.domain.model.Track
@@ -88,20 +86,5 @@ class PlayerViewModel(private val playTrackInteractor: PlayTrackInteractor) : Vi
                 playTrackInteractor.pausePlayer()
             }
         }
-
     }
-
-
-    companion object {
-        fun getViewModelFactory(): ViewModelProvider.Factory =
-            object : ViewModelProvider.Factory {
-                @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return PlayerViewModel(
-                        Creator.providePlayTrackInteractor()
-                    ) as T
-                }
-            }
-    }
-
 }

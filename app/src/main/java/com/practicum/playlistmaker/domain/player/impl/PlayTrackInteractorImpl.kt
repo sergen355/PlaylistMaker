@@ -1,8 +1,8 @@
 package com.practicum.playlistmaker.domain.player.impl
 
-import com.practicum.playlistmaker.domain.player.PlayTrackRepository
 import com.practicum.playlistmaker.domain.model.PlayerState
 import com.practicum.playlistmaker.domain.player.PlayTrackInteractor
+import com.practicum.playlistmaker.domain.player.PlayTrackRepository
 
 class PlayTrackInteractorImpl(private val repository: PlayTrackRepository) : PlayTrackInteractor {
 
