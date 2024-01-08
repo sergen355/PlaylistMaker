@@ -24,6 +24,17 @@ class SearchViewModel(
     private var _isShowHistoryListMutable = MutableLiveData<Boolean>()
     val isShowHistoryList: LiveData<Boolean> = _isShowHistoryListMutable
 
+    private var isPaused: Boolean = false
+    private var lastQuery: String = ""
+
+    fun getLastQuery():String {
+        return lastQuery
+    }
+
+    fun setPaused(arg: Boolean) {
+        isPaused = arg
+    }
+
     private val _selectedTrack = MutableLiveData<Track?>()
     val selectedTrack: LiveData<Track?> = _selectedTrack
 
@@ -85,24 +96,26 @@ class SearchViewModel(
     }
 
     fun searchTrack(queryString: String) {
-
-        _searchStatusMutable.value = SearchStatus.IN_PROGRESS
-        val resp = searchInteractor.searchTrack(queryString, object :
-            SearchInteractor.TrackConsumer {
-            override fun consume(foundTracks: List<Track>?) {
-                if (foundTracks == null) {
-                    _searchStatusMutable.postValue(SearchStatus.CONNECTION_ERROR)
-                }
-                if (foundTracks != null) {
-                    if (foundTracks.isEmpty()) {
-                        _searchStatusMutable.postValue(SearchStatus.EMPTY_RESULT)
-                    } else if (foundTracks.isNotEmpty()) {
-                        _trackListMutable.postValue(foundTracks!!)
-                        _searchStatusMutable.postValue(SearchStatus.SUCCESS)
+        if (!isPaused and !queryString.equals(lastQuery)) {
+            _searchStatusMutable.value = SearchStatus.IN_PROGRESS
+            val resp = searchInteractor.searchTrack(queryString, object :
+                SearchInteractor.TrackConsumer {
+                override fun consume(foundTracks: List<Track>?) {
+                    if (foundTracks == null) {
+                        _searchStatusMutable.postValue(SearchStatus.CONNECTION_ERROR)
+                    }
+                    if (foundTracks != null) {
+                        if (foundTracks.isEmpty()) {
+                            _searchStatusMutable.postValue(SearchStatus.EMPTY_RESULT)
+                        } else if (foundTracks.isNotEmpty()) {
+                            _trackListMutable.postValue(foundTracks!!)
+                            _searchStatusMutable.postValue(SearchStatus.SUCCESS)
+                        }
                     }
                 }
-            }
-        })
+            })
+            lastQuery = queryString
+        }
     }
 
 }

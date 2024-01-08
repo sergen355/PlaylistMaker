@@ -10,13 +10,6 @@
     <FrameLayout style="@style/MainHeaderLayoutStyle"
         android:padding="4dp">
 
-
-        <ImageView
-            android:id="@+id/back"
-            style="@style/BackButtonStyle"
-
-            android:contentDescription="@string/back_button" />
-
         <TextView
             style="@style/HeaderStyle"
             android:layout_width="wrap_content"
@@ -39,13 +32,13 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/edit_text"
+                android:id="@+id/search_line"
                 android:textCursorDrawable="@drawable/cursor"
 
                 style="@style/SearchLineStyle" />
 
             <ImageView
-                android:id="@+id/clear_icon"
+                android:id="@+id/clear_button"
                 style="@style/CloseButtonImageViewStyle"
 
                 android:contentDescription="@string/clear_button" />
@@ -81,7 +74,7 @@
             android:gravity="center" />
 
         <Button
-            android:id="@+id/placeholder_button"
+            android:id="@+id/placeholder_update_button"
             style="@style/UpdateButton"
             android:layout_marginTop="16dp"
 

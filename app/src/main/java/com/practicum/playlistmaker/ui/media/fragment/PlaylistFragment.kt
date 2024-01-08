@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.practicum.playlistmaker.databinding.PlaylistFragmentBinding
+import com.practicum.playlistmaker.databinding.FragmentPlaylistBinding
 import com.practicum.playlistmaker.ui.media.view_model.PlaylistFragmentViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class PlaylistFragment : Fragment() {
-    private lateinit var binding: PlaylistFragmentBinding
+    private lateinit var binding: FragmentPlaylistBinding
 
     private val playlistViewModel: PlaylistFragmentViewModel by viewModel {
         parametersOf()
@@ -21,7 +21,7 @@ class PlaylistFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = PlaylistFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentPlaylistBinding.inflate(inflater, container, false)
         return binding.root
     }
 
