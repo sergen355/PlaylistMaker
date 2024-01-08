@@ -24,6 +24,7 @@
     </style>
 
     <style name="MainLayoutStyle">
+        <item name="android:background">@color/yp_black</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>

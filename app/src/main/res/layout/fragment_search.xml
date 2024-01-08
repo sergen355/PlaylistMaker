@@ -24,7 +24,8 @@
     <LinearLayout
         style="@style/WindowLayoutStyle"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding">
+        android:padding="@dimen/padding"
+        android:paddingBottom="0dp">
 
         <FrameLayout
             style="@style/SearchLineBoxStyle"
@@ -34,9 +35,9 @@
 
             <EditText
                 android:id="@+id/search_line"
-                android:textCursorDrawable="@drawable/cursor"
+                style="@style/SearchLineStyle"
 
-                style="@style/SearchLineStyle" />
+                android:textCursorDrawable="@drawable/cursor" />
 
             <ImageView
                 android:id="@+id/clear_button"
@@ -94,7 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/padding"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="0dp">
 
             <TextView
                 android:id="@+id/placeholder_history_text"
@@ -124,9 +126,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_weight="0"
                 android:text="@string/clear_history"
-                android:visibility="gone"
-
-                />
+                android:visibility="gone" />
 
         </LinearLayout>
 

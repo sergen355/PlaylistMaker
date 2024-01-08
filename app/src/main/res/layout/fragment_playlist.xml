@@ -19,7 +19,7 @@
             android:text="@string/new_playlist" />
 
         <ImageView
-            android:id="@+id/favorites_error"
+            android:id="@+id/favourites_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="46dp"

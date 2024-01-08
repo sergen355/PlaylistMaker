@@ -12,7 +12,7 @@ import org.koin.core.parameter.parametersOf
 
 class FavouritesFragment : Fragment() {
     private lateinit var binding: FragmentFavouritesBinding
-    private val favoritesViewModel: FavouritesFragmentViewModel by viewModel {
+    private val favouritesViewModel: FavouritesFragmentViewModel by viewModel {
         parametersOf()
     }
 
