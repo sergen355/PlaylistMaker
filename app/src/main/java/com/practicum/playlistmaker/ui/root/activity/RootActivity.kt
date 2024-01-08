@@ -2,14 +2,10 @@ package com.practicum.playlistmaker.ui.root.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityRootBinding
-import com.practicum.playlistmaker.ui.media.fragment.MediaFragment
-import com.practicum.playlistmaker.ui.search.fragment.SearchFragment
-import com.practicum.playlistmaker.ui.settings.fragment.SettingsFragment
 
 class RootActivity : AppCompatActivity() {
 
