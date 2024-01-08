@@ -117,13 +117,13 @@
         android:layout_marginTop="28dp"
         android:contentDescription="@string/play"
         android:src="@drawable/play"
-        app:layout_constraintEnd_toStartOf="@id/add_to_favorites"
+        app:layout_constraintEnd_toStartOf="@id/add_to_favourites"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@id/add_to_playlist"
         app:layout_constraintTop_toBottomOf="@id/artist" />
 
     <ImageButton
-        android:id="@+id/add_to_favorites"
+        android:id="@+id/add_to_favourites"
         style="@style/trackDetailButtonGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

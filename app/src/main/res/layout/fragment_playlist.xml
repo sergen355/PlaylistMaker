@@ -8,13 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+
+        >
+
+        <Button
+            android:id="@+id/technicalErrorButton"
+            style="@style/UpdateButton"
+            android:layout_marginTop="16dp"
+            android:text="@string/new_playlist" />
 
         <ImageView
-            android:id="@+id/favorites_error"
+            android:id="@+id/favourites_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="46dp"
             android:scaleType="centerCrop"
             android:src="@drawable/placeholder_songs_nothing_found" />
 
@@ -25,8 +33,7 @@
             android:fontFamily="@font/ys_display_medium"
             android:gravity="center_horizontal"
             android:paddingTop="16dp"
-            android:text="@string/empty_medialibrary"
+            android:text="@string/no_playlists_created"
             android:textSize="19sp" />
-
     </LinearLayout>
 </FrameLayout>

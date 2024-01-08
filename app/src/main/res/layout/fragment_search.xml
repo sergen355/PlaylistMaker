@@ -10,18 +10,12 @@
     <FrameLayout style="@style/MainHeaderLayoutStyle"
         android:padding="4dp">
 
-
-        <ImageView
-            android:id="@+id/back"
-            style="@style/BackButtonStyle"
-
-            android:contentDescription="@string/back_button" />
-
         <TextView
             style="@style/HeaderStyle"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="55dp"
+            android:paddingTop="@dimen/padding"
+            android:layout_marginStart="12dp"
 
             android:text="@string/search" />
 
@@ -30,7 +24,8 @@
     <LinearLayout
         style="@style/WindowLayoutStyle"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding">
+        android:padding="@dimen/padding"
+        android:paddingBottom="0dp">
 
         <FrameLayout
             style="@style/SearchLineBoxStyle"
@@ -39,13 +34,13 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/edit_text"
-                android:textCursorDrawable="@drawable/cursor"
+                android:id="@+id/search_line"
+                style="@style/SearchLineStyle"
 
-                style="@style/SearchLineStyle" />
+                android:textCursorDrawable="@drawable/cursor" />
 
             <ImageView
-                android:id="@+id/clear_icon"
+                android:id="@+id/clear_button"
                 style="@style/CloseButtonImageViewStyle"
 
                 android:contentDescription="@string/clear_button" />
@@ -81,7 +76,7 @@
             android:gravity="center" />
 
         <Button
-            android:id="@+id/placeholder_button"
+            android:id="@+id/placeholder_update_button"
             style="@style/UpdateButton"
             android:layout_marginTop="16dp"
 
@@ -100,7 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/padding"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="0dp">
 
             <TextView
                 android:id="@+id/placeholder_history_text"
@@ -130,9 +126,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_weight="0"
                 android:text="@string/clear_history"
-                android:visibility="gone"
-
-                />
+                android:visibility="gone" />
 
         </LinearLayout>
 

@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.practicum.playlistmaker.databinding.FavouritesFragmentBinding
+import com.practicum.playlistmaker.databinding.FragmentFavouritesBinding
 import com.practicum.playlistmaker.ui.media.view_model.FavouritesFragmentViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class FavouritesFragment : Fragment() {
-    private lateinit var binding: FavouritesFragmentBinding
-    private val favoritesViewModel: FavouritesFragmentViewModel by viewModel {
+    private lateinit var binding: FragmentFavouritesBinding
+    private val favouritesViewModel: FavouritesFragmentViewModel by viewModel {
         parametersOf()
     }
 
@@ -20,7 +20,7 @@ class FavouritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FavouritesFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
