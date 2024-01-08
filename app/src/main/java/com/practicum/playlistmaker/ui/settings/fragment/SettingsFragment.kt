@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.FragmentSettingsBinding
 import com.practicum.playlistmaker.ui.settings.view_model.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,6 +36,10 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.themeSwitcher.isUseMaterialThemeColors = false
+        binding.themeSwitcher.thumbTintList = ContextCompat.getColorStateList(view.context, R.color.thumb_selector)
+        binding.themeSwitcher.trackTintList = ContextCompat.getColorStateList(view.context, R.color.track_selector)
 
         settingsViewModel.currentTheme.observe(viewLifecycleOwner) { currentTheme ->
             binding.themeSwitcher.isChecked = currentTheme

@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/mediaFragment"
-        android:icon="@drawable/library"
+        android:icon="@drawable/medialibrary"
         android:title="@string/medialibrary" />
 
     <item

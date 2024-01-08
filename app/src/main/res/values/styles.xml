@@ -179,8 +179,8 @@
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textColor">@color/yp_black</item>
         <item name="android:background">@color/yp_white</item>
-        <item name="itemIconTint">@drawable/search</item>
-        <item name="itemTextColor">@drawable/search</item>
+        <item name="itemIconTint">@drawable/nav</item>
+        <item name="itemTextColor">@drawable/nav</item>
     </style>
 
 </resources>

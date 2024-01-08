@@ -10,7 +10,8 @@
             style="@style/HeaderStyle"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="55dp"
+            android:paddingTop="@dimen/padding"
+            android:layout_marginStart="12dp"
 
             android:text="@string/settings" />
 

@@ -32,7 +32,7 @@
             style="@style/MainButtonStyle"
             android:text="@string/medialibrary"
 
-            app:icon="@drawable/library" />
+            app:icon="@drawable/medialibrary" />
 
         <Button
             android:id="@+id/settings"

@@ -12,15 +12,15 @@
         android:name="com.practicum.playlistmaker.ui.search.fragment.SearchFragment"
         android:label="SearchFragment" >
         <action
-            android:id="@+id/action_searchFragment_to_trackDetailsActivity"
-            app:destination="@id/trackDetailsActivity" />
+            android:id="@+id/action_searchFragment_to_playerActivity"
+            app:destination="@id/playerActivity" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.practicum.playlistmaker.ui.settings.fragment.SettingsFragment"
         android:label="SettingsFragment" />
     <activity
-        android:id="@+id/trackDetailsActivity"
+        android:id="@+id/playerActivity"
         android:name="com.practicum.playlistmaker.ui.player.activity.PlayerActivity"
-        android:label="TrackDetailsActivity" />
+        android:label="PlayerActivity" />
 </navigation>
